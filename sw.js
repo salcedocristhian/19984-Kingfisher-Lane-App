@@ -1,0 +1,9 @@
+// MTD King Fisher PWA — cache local app shell. 3D CDN libraries still require internet on first use.
+const CACHE = 'mtd-king-fisher-v1';
+const ASSETS = ['./','./index.html','./manifest.webmanifest','./assets/mtd-logo.png','./assets/king-fisher-reference.png','./assets/icon-192.png','./assets/icon-512.png','./assets/apple-touch-icon.png','./assets/favicon.ico'];
+self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS))); self.skipWaiting(); });
+self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))); self.clients.claim(); });
+self.addEventListener('fetch', event => {
+ const req = event.request; if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+ event.respondWith(fetch(req).then(resp => {if(resp.ok){const clone=resp.clone();caches.open(CACHE).then(cache=>cache.put(req,clone));} return resp;}).catch(()=>caches.match(req)));
+});
