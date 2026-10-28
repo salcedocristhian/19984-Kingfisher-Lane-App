@@ -23,5 +23,6 @@ document.getElementById('kfNativeTabs')?.addEventListener('click',close,true);
 $('kfNativeBack')?.addEventListener('click',close,true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 new MutationObserver(close).observe(B,{attributes:true,attributeFilter:['data-view']});
+const ai=document.createElement('button');ai.type='button';ai.id='kf23AI';ai.className='kf23-ai';ai.setAttribute('aria-label','Prepare current view for AI rendering');ai.title='Capture and share with AI';ai.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.5 14.4 9.6 21.5 12l-7.1 2.4L12 21.5l-2.4-7.1L2.5 12l7.1-2.4L12 2.5Z"/><path d="m19 2 .75 2.25L22 5l-2.25.75L19 8l-.75-2.25L16 5l2.25-.75L19 2Z"/></svg>';B.append(ai);ai.addEventListener('click',()=>{close();$('kfRenderOpen')?.click()});
 sync();window.KFStudio23={open,close};
 })();
