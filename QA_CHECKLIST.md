@@ -1,24 +1,15 @@
-# Studio 2.1 — QA & acceptance checklist
+# On-device QA – Studio 2.2
 
-## Static checks (completed)
-- [x] HTML contains original WebGL 3D model and material options.
-- [x] JavaScript parsing passed for all nine inline scripts.
-- [x] No duplicate element IDs.
-- [x] All four mobile tabs exist with correctly mapped destination views.
-- [x] iPhone-safe top header and bottom navigation are separate from desktop view.
-- [x] Service Worker cache version incremented to reduce stale deployments.
-- [x] Standalone mobile layout simulation: 390 × 844 screen, 72px header, 640px 3D viewport, 64px material sheet, 76px bottom tabs; no overlap.
-- [x] Standalone mobile layout simulation: secondary menu opens without clipping.
+- [ ] Open Home: no duplicated giant buttons; tabs at bottom and four round tools at right.
+- [ ] Home quick camera chips: Exterior, Entry, Rear patio, Floor plan all change live 3D camera.
+- [ ] Design tab: tap quick chip Kitchen, Living room, Foyer, suite; each changes to the right camera.
+- [ ] Tap small bottom-left plan icon: floating room picker reappears.
+- [ ] Tap selected room pill: room list opens and can select another room.
+- [ ] Tap bottom material drawer: materials expand and swatches change finishes.
+- [ ] Right-side Walk, Tour, Plan and Light actually trigger the existing controls.
+- [ ] AI star opens neutral current-view capture / PNG sharing (not an automatic ChatGPT redirect).
+- [ ] Build tab: card is unobstructed; Previous/Next change stage; Play starts animation.
+- [ ] Saved tab, app icon, export and existing design state continue functioning.
+- [ ] Test landscape/rotate, safe areas, and newer iOS Safari plus Home Screen install.
 
-## Real-device acceptance (pending)
-- [ ] Open on iPhone Home Screen; verify model loads and orbit/touch/pinch work.
-- [ ] Navigate Explore / Design / Build / Saved; inspect each destination.
-- [ ] Tap Materials & finishes to expand and select a finish; confirm the 3D scene updates.
-- [ ] Tap Undo; ensure material selection reverts.
-- [ ] Tap AI sparkles; confirm current view capture and share sheet.
-- [ ] More → Camera views; verify all view shortcuts fit and are horizontally scrollable.
-- [ ] More → Immersive view; exit and restore controls.
-- [ ] Confirm save, export, and older saved versions still function.
-- [ ] Repeat in landscape; check accessibility with larger system text.
-
-Note: Direct end-to-end testing in a full local browser was blocked in this environment, so the real 3D interaction is not certified. The interface-only layout was validated in a separate browser simulation without the 3D engine. The layout screenshots contain placeholders and are not 3D renderings.
+Do not call this production-validated until the above tests pass on an actual iPhone. Previous versions should be retained for rollback.

@@ -1,26 +1,16 @@
-# King Fisher Studio 2.1 — iPhone layout correction
-
-Production candidate from the prior Studio 2.0 release. Uses the same 3D geometry, finishes, camera views, menus, logo and save/export functionality. Changes are restricted to the native-inspired phone layout and mobile controller.
+# King Fisher Studio 2.2 – Mockup-inspired iPhone UI
 
 ## What changed
-- Fixed top header with current room and small Undo, AI and More actions.
-- Four-button fixed bottom navigation: Explore / Design / Build / Saved.
-- Reduced overlapping floating toolbar; camera views and other advanced tools moved under More.
-- Material and build sheet moved above the bottom navigation with correct iPhone safe-area spacing.
-- WebGL viewport resized to avoid being covered by the sheet and tab bar.
-- Sharper solid control surfaces instead of excessively blurred panels.
-- Saved section opens existing selections and saved design combinations, preserving budget functionality.
-- Mobile AI icon shares a capture via neutral iOS share sheet, not a specific AI provider.
-- Updated service worker cache version.
+- Home is a real full-screen 3D home overview with only the MTD header, individual quick tools, camera chips, and fixed bottom navigation. Duplicate homepage calls-to-action are removed on mobile.
+- Design starts with the actual floor-plan camera and floating room-select chips. Tapping a room opens its real 3D camera; a small floor-plan button brings the picker back.
+- No more persistent large room drop-down or camera-button bar. Material choices remain in the small slide-up drawer.
+- Walk, Tour, floor plan, and Light are four independent 44px floating round controls (not a bar).
+- Build stages is a compact stage card with progress and previous/next controls, plus playback using existing animation.
+- Existing Three.js model, finishes, 12 construction stages, CSV/PDF export, saved options, and provider-neutral AI share remain in the package.
+- Original MTD logo and manifest icons preserved; Service Worker version bumped.
 
-## Deploy to GitHub
-1. Back up the existing `index.html` and app data before modifying.
-2. Extract the ZIP. Upload the **contents** of the folder to the root of the `19984-Kingfisher-Lane-App` repository, replacing existing files.
-3. Confirm GitHub Actions Pages deployment succeeds.
-4. On iPhone, close the home-screen app completely and reopen with internet.
-5. Check camera orbit, bottom tabs, expandable Materials & Finishes, More > Camera views, and AI capture/share.
+## Deployment
+Back up the currently published HTML first. Unzip, upload the *contents* to repository root, commit to `main`, and verify a green Pages deployment. Relaunch the iPhone home-screen app with Wi-Fi. Do not install the ZIP as a web app directly.
 
-## Caveats
-- The desktop 3D/model code remains unchanged; no new photorealistic generation API.
-- Saved designs remain device-specific unless integrated with external storage.
-- Browser testing does not replace a final physical iPhone acceptance test.
+## Known limitations
+The mockup was a visualization; this version uses the existing live 3D geometry instead of replacing it with AI photos. It is not a pixel-perfect match to a static photorealistic image. AI sharing prepares an image/prompt for external apps; it does not generate a new photorealistic render automatically. The final iOS touch/camera/performance acceptance test must occur on your actual phone.
