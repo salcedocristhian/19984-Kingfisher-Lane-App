@@ -1,5 +1,5 @@
 /* King Fisher Residence – network-first update; native iPhone app icon uses v3 path. */
-const CACHE = 'king-fisher-mtd-studio-20261028-v231-single-ai';
+const CACHE = 'king-fisher-mtd-studio-20261028-v232-exclusive-finishes';
 const ASSETS = [
  './index.html', './kf23.css', './kf23.js', './manifest.webmanifest',
  './assets/kingfisher-atardecer-apple-v3.png',
