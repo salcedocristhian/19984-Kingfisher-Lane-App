@@ -11,9 +11,9 @@
 <meta name="apple-mobile-web-app-title" content="King Fisher">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/kingfisher-atardecer-apple-v3.png">
 <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/kingfisher-atardecer-192-v3.png">
 <link rel="shortcut icon" href="./assets/favicon.ico">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -379,6 +379,32 @@ body.m-land .hero p{font-size:13px;margin:0 0 12px}
 body.m-land .hero .spec{display:none}
 body.m-land .hero .btn{padding:9px 13px;font-size:13px}
 @media (hover:none){.tabs button:hover{color:var(--soft)}.tabs button[aria-current="page"]:hover{color:var(--paper)}.ph:hover,.saved button:hover{background:transparent}}
+</style>
+<style id="kfRenderStyles">
+.kf-render-fab{position:fixed;z-index:18;right:calc(420px + 26px);bottom:22px;border:0;border-radius:999px;background:#0b2b60;color:#fff;box-shadow:0 8px 28px #08264b45;padding:12px 17px;font:600 14px/1.2 system-ui,-apple-system,sans-serif;display:none;align-items:center;gap:8px;cursor:pointer}
+body[data-view="disenar"] .kf-render-fab,body[data-view="obra"] .kf-render-fab{display:flex}
+.kf-render-fab svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kf-r-overlay{position:fixed;inset:0;z-index:130;background:rgba(9,26,47,.72);display:flex;align-items:center;justify-content:center;padding:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.kf-r-overlay[hidden]{display:none!important}
+.kf-r-dialog{box-sizing:border-box;width:min(590px,100%);max-height:min(92vh,860px);overflow:auto;background:#f9f8f5;color:#182b45;border-radius:22px;padding:20px;box-shadow:0 20px 90px #0005;font:14px/1.48 system-ui,-apple-system,sans-serif}
+.kf-r-top{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.kf-r-top h2{font-size:21px;margin:0;font-weight:700;letter-spacing:-.025em}
+.kf-r-top button{border:0;background:#e8ebed;color:#17283b;border-radius:50%;width:36px;height:36px;font-size:23px;cursor:pointer}
+.kf-r-desc{margin:8px 0 12px;color:#5a6b79;font-size:13px}
+.kf-r-preview{display:block;max-width:100%;width:100%;max-height:42vh;object-fit:contain;border-radius:12px;background:#e4e5e5;min-height:145px}
+.kf-r-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:13px 0}
+.kf-r-actions button,.kf-r-gallery button{background:#fff;color:#0b2b60;border:1px solid #b9c4cd;border-radius:12px;min-height:42px;padding:9px 10px;font:600 12px system-ui,-apple-system,sans-serif;cursor:pointer}
+.kf-r-actions button.primary{background:#0b2b60;color:#fff;border-color:#0b2b60}
+.kf-r-ai{border-top:1px solid #dce1e4;padding-top:12px;font-size:13px;color:#4f5c65}
+.kf-r-ai p{margin:6px 0 12px}
+.kf-r-ai strong{color:#172c4c}
+.kf-r-status{color:#0b2b60;font-weight:600;min-height:22px;margin:8px 0 0;font-size:12px}
+.kf-r-gallery{display:flex;gap:9px;overflow-x:auto;margin:12px 0 0;padding-bottom:5px}
+.kf-r-thumb{border:1px solid #dce1e4;border-radius:11px;background:#fff;padding:5px;min-width:100px;max-width:100px;cursor:pointer}
+.kf-r-thumb img{width:88px;height:72px;object-fit:cover;border-radius:6px;display:block}
+.kf-r-thumb span{font-size:10px;display:block;color:#506272;margin-top:5px;line-height:1.2}
+.kf-r-dialog h3{font-size:14px;margin:15px 0 4px}
+@media(max-width:900px){.kf-render-fab{left:13px;right:auto;top:49%;bottom:auto;padding:12px 15px;font-size:13px;z-index:18}.kf-r-dialog{border-radius:17px;max-height:88vh;padding:14px}.kf-r-preview{max-height:37vh}.kf-r-actions button{font-size:12px}}
 </style>
 </head>
 <body data-view="inicio">
@@ -2183,6 +2209,43 @@ if (typeof module !== 'undefined') module.exports = { buildObra };
   // ======================= render =======================
   let pending = false;
   RENDER.fn = () => renderer.render(scene, cam); RENDER.after = [];
+
+  // MTD Render View: exact current camera and selections, with no dependency on Claude download APIs.
+  window.KF_CAPTURE_VIEW = async function() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const limit = isMobile ? 2100 : 3200; // protect iPhone WebGL memory
+    const nativeW = Math.max(1, Math.round(stage.clientWidth));
+    const nativeH = Math.max(1, Math.round(stage.clientHeight));
+    const scale = Math.min(limit/Math.max(nativeW,nativeH), 2.5);
+    const targetW = Math.max(1, Math.round(nativeW*scale));
+    const targetH = Math.max(1, Math.round(nativeH*scale));
+    const oldPR = renderer.getPixelRatio();
+    const oldAspect = cam.aspect;
+    const oldViewport = cam.view && Object.assign({},cam.view);
+    const snap = document.createElement('canvas');
+    snap.width = targetW; snap.height = targetH;
+    const ctx = snap.getContext('2d', {alpha:false});
+    if (!ctx) throw new Error('2D capture is unavailable');
+    try {
+      renderer.setPixelRatio(1);
+      renderer.setSize(targetW,targetH,false);
+      cam.aspect=targetW/targetH; cam.updateProjectionMatrix();
+      // Read WebGL output synchronously after this render (required on iOS when preserveDrawingBuffer=false).
+      renderer.render(scene,cam);
+      ctx.drawImage(canvas,0,0,targetW,targetH);
+    } finally {
+      renderer.setPixelRatio(oldPR);
+      renderer.setSize(nativeW,nativeH,false);
+      cam.aspect=oldAspect;
+      if(oldViewport && oldViewport.enabled) cam.setViewOffset(oldViewport.fullWidth,oldViewport.fullHeight,oldViewport.offsetX,oldViewport.offsetY,oldViewport.width,oldViewport.height);
+      else cam.clearViewOffset();
+      cam.updateProjectionMatrix();
+      renderer.render(scene,cam);
+    }
+    const blob=await new Promise((resolve,reject)=>snap.toBlob(b=>b?resolve(b):reject(new Error('Could not encode image')),'image/png'));
+    return {blob,width:targetW,height:targetH,info:{view:viewId,phase,selection:Object.assign({},sel),camera:{position:cam.position.toArray(),target:controls.target.toArray(),fov:cam.fov},created:new Date().toISOString()}};
+  };
+
   function render() { if (pending) return; pending = true; requestAnimationFrame(() => { pending = false; RENDER.fn(); RENDER.after.forEach(f => f()); }); }
   controls.addEventListener('change', render);
   (function loop() { controls.update(); if (spin) render(); requestAnimationFrame(loop); })();
@@ -2980,8 +3043,57 @@ layout();setTimeout(layout,400);
 <script>
 // Installable home-screen experience. App functionality remains in the original HTML above.
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=20261028-render-view-1').catch(() => {}));
 }
+</script>
+
+<!-- MTD Render View: view capture and on-device gallery (no API credentials in public GitHub Pages). -->
+<button type="button" class="kf-render-fab" id="kfRenderOpen" aria-label="Render current view"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>Render this view</button>
+<section class="kf-r-overlay" id="kfRenderOverlay" hidden aria-label="Render this view">
+ <div class="kf-r-dialog" role="dialog" aria-modal="true" aria-labelledby="kfRenderTitle">
+  <div class="kf-r-top"><h2 id="kfRenderTitle">Render this view</h2><button id="kfRenderClose" aria-label="Close render dialog" type="button">×</button></div>
+  <p class="kf-r-desc">The camera, furniture, lighting and finish colors are captured directly from your current 3D view.</p>
+  <img id="kfRenderPreview" class="kf-r-preview" alt="Capture of the current King Fisher Residence 3D view">
+  <div class="kf-r-status" id="kfRenderStatus" role="status">Preparing current view…</div>
+  <div class="kf-r-actions">
+   <button type="button" class="primary" id="kfRenderShare">Share / Save to Photos</button>
+   <button type="button" id="kfRenderDownload">Download PNG</button>
+   <button type="button" id="kfRenderGallerySave">Save in My Renders</button>
+   <button type="button" id="kfRenderAgain">Recapture current view</button>
+  </div>
+  <div class="kf-r-ai"><strong>Photorealistic AI</strong><p>Prepare this exact camera view for a photorealistic enhancement in ChatGPT. Fully automatic AI rendering requires a separately connected, secure image-generation service.</p>
+    <div class="kf-r-actions"><button class="primary" type="button" id="kfRenderPrepareAI">Prepare AI render</button><button type="button" id="kfRenderPrompt">Copy AI prompt</button></div>
+  </div>
+  <h3>My Renders <small style="font-weight:400;color:#677783">(stored only on this device)</small></h3>
+  <div class="kf-r-gallery" id="kfRenderGallery"><span style="color:#71808e;font-size:12px">No saved views yet</span></div>
+ </div>
+</section>
+<script id="kfRenderFeature">
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const overlay=$('kfRenderOverlay'),status=$('kfRenderStatus'),preview=$('kfRenderPreview');
+let current=null, previewURL='', saved=[];
+const DB_NAME='KingFisherRenderGalleryV1';
+function dbOpen(){return new Promise((resolve,reject)=>{if(!indexedDB)return reject(new Error('Local gallery unavailable'));const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{req.result.createObjectStore('renders',{keyPath:'id'});};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
+async function dbAll(){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readonly');const q=tx.objectStore('renders').getAll();q.onsuccess=()=>{db.close();resolve(q.result||[]);};q.onerror=()=>{db.close();reject(q.error);};});}
+async function dbPut(data){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readwrite');tx.objectStore('renders').put(data);tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};});}
+async function dbDelete(id){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readwrite');tx.objectStore('renders').delete(id);tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};});}
+function name(){const d=new Date();return 'King_Fisher_'+(current?.info?.view||'View')+'_'+d.toISOString().replace(/[.:]/g,'-').slice(0,19)+'.png';}
+function prompt(){const info=current?.info||{};return `Transform the attached 3D architectural viewport of King Fisher Residence at 19984 King Fisher Ln, Loxahatchee, into a high-end photorealistic architectural rendering. Preserve the exact camera viewpoint, perspective, framing, floor plan, wall/door/window positions, cabinetry, countertops, furniture placement, proportions, ceiling geometry and selected finish colors. Upgrade realistic textures, wood grain, lighting, shadows, reflections and photographic realism only. Do not add, remove or relocate architectural elements or furniture. This is the selected ${info.view||'room'} view in construction stage ${info.phase||'current'}. Camera and materials should remain faithful to the reference image. Do not add captions, logos or watermarks.`;}
+function alertState(text){status.textContent=text;}
+function open(){overlay.hidden=false;document.body.style.overflow='hidden';capture();gallery().catch(()=>{});}
+function close(){overlay.hidden=true;document.body.style.overflow='';}
+async function capture(){alertState('Capturing this exact camera angle…');try{if(typeof window.KF_CAPTURE_VIEW!=='function')throw new Error('3D model is still loading');const next=await window.KF_CAPTURE_VIEW();current=next;if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(next.blob);preview.src=previewURL;alertState(`${next.width} × ${next.height} PNG · ${next.info.view} · ready`);}catch(e){alertState('Could not capture this view: '+(e.message||e));}}
+async function download(){if(!current)return alertState('Capture a view first');const url=URL.createObjectURL(current.blob);const link=document.createElement('a');link.href=url;link.download=name();document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),45000);alertState('PNG prepared for download. On iPhone check Files / Downloads.');}
+async function share(attachPrompt=false){if(!current)return alertState('Capture a view first');const file=new File([current.blob],name(),{type:'image/png'});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({files:[file],title:'King Fisher Residence — current view',text:attachPrompt?prompt():'Current King Fisher Residence 3D view'});alertState('Choose Save Image to save to Photos, or share with another app.');}else{download();alertState('Sharing is not supported here; saved as PNG instead.');}}catch(e){if(e.name!=='AbortError')alertState('Share unavailable; use Download PNG.');}}
+async function save(){if(!current)return alertState('Capture a view first');try{const id=Date.now()+'-'+Math.floor(Math.random()*100000);const data={id,blob:current.blob,info:current.info,created:new Date().toISOString()};await dbPut(data);alertState('Saved in My Renders on this device (not uploaded to GitHub).');await gallery();}catch(e){alertState('Browser storage is unavailable or full. Use Download PNG instead.');}}
+async function gallery(){const el=$('kfRenderGallery');try{saved=(await dbAll()).sort((a,b)=>b.created.localeCompare(a.created)).slice(0,16);el.replaceChildren();if(!saved.length){el.textContent='No saved views yet';return;}saved.forEach(row=>{const b=document.createElement('button');b.className='kf-r-thumb';b.type='button';const u=URL.createObjectURL(row.blob);const img=document.createElement('img');img.src=u;img.alt=row.info?.view||'Saved render';img.onload=()=>setTimeout(()=>URL.revokeObjectURL(u),40000);const label=document.createElement('span');label.textContent=(row.info?.view||'View')+' · '+new Date(row.created).toLocaleDateString();b.append(img,label);b.onclick=()=>{current={blob:row.blob,info:row.info};if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(row.blob);preview.src=previewURL;alertState('Saved view selected. Download, share or prepare an AI rendering.');};b.oncontextmenu=async e=>{e.preventDefault();if(confirm('Delete this saved view from this device?')){await dbDelete(row.id);gallery();}};el.appendChild(b);});}catch(e){el.textContent='Local gallery not available in this browser.';}}
+async function copyPrompt(){try{await navigator.clipboard.writeText(prompt());alertState('Prompt copied. Upload the PNG to ChatGPT with this prompt.');}catch(e){alertState('Copy not available. Share image to ChatGPT and ask to preserve the exact camera and colors.');}}
+$('kfRenderOpen').addEventListener('click',open);$('kfRenderClose').addEventListener('click',close);
+overlay.addEventListener('click',e=>{if(e.target===overlay)close();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close();});
+$('kfRenderAgain').addEventListener('click',capture);$('kfRenderDownload').addEventListener('click',download);$('kfRenderShare').addEventListener('click',()=>share(false));$('kfRenderGallerySave').addEventListener('click',save);$('kfRenderPrompt').addEventListener('click',copyPrompt);$('kfRenderPrepareAI').addEventListener('click',async()=>{await copyPrompt();await share(true);});
+})();
 </script>
 </body>
 </html>

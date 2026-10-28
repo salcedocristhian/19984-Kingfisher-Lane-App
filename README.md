@@ -1,38 +1,28 @@
-# King Fisher Residence · MTD (GitHub Pages / iPhone)
+# King Fisher Residence – MTD | Icono definitivo para iPhone
 
-**Versión:** 27 de octubre de 2026. `index.html` proviene exactamente del archivo más reciente **King Fisher Residence _ MTD Painting & Construction.html**, con cambios mínimos en la cabecera para habilitar instalación móvil y registro del service worker. **No se ha reemplazado por la versión anterior.**
+## Corrección de icono (27 oct 2026, v3)
 
-## Instalar en GitHub
+La app ahora usa **el icono exacto del atardecer** proporcionado por el usuario.
+No se modificaron los contenidos ni la geometría 3D del diseño: únicamente las referencias de iconos y la versión del Service Worker.
 
-1. Descarga el ZIP y **extráelo** en tu computadora. No subas el ZIP sin extraer: la interfaz web de GitHub no lo descomprime automáticamente.
-2. Abre `salcedocristhian/19984-Kingfisher-Lane-App` → **Add file → Upload files**.
-3. Arrastra **el contenido** de la carpeta extraída (no la carpeta que lo contiene): `index.html`, `manifest.webmanifest`, `sw.js`, `.nojekyll` y **la carpeta `assets/` completa**.
-4. En el campo de descripción puedes poner `Update final 3D HTML and MTD iPhone icon`, luego **Commit changes**.
-5. Si no está habilitado: **Settings → Pages → Build and deployment → Deploy from a branch → main → /(root) → Save**.
-6. Comprueba el enlace publicado que GitHub muestra en Settings → Pages. La URL probable es: `https://salcedocristhian.github.io/19984-Kingfisher-Lane-App/` (puede cambiar si se modifica el repositorio).
+- iPhone: `assets/kingfisher-atardecer-apple-v3.png` (180 x 180)
+- Manifest: `assets/kingfisher-atardecer-192-v3.png` y `assets/kingfisher-atardecer-512-v3.png`
+- Se conservaron también los nombres anteriores de iconos con la nueva imagen, para compatibilidad.
 
-## iPhone
+## Instalar / actualizar
 
-1. Abre la dirección HTTPS de GitHub Pages en **Safari**.
-2. Pulsa **Compartir → Añadir a pantalla de inicio**.
-3. Verifica que el icono sea el de la fachada al atardecer con logo MTD, luego **Añadir**.
-4. Si la app ya estaba instalada con un icono anterior, elimínala de la pantalla de inicio y vuelve a añadirla después de refrescar Safari (a veces iOS conserva el icono en caché).
+1. Descomprime el ZIP. Sube **todos los archivos y la carpeta `assets`**, no el ZIP, a la raíz del repositorio `19984-Kingfisher-Lane-App`. Sustituye los archivos existentes cuando GitHub lo indique.
+2. En GitHub Actions, comprueba que `pages build and deployment` termine con éxito.
+3. En Safari del iPhone, abre `https://salcedocristhian.github.io/19984-Kingfisher-Lane-App/?icon=atardecer-v3`, y usa **Compartir → Añadir a pantalla de inicio**.
+4. Si hay un acceso anterior instalado con el icono viejo, retíralo de la pantalla de inicio y crea el nuevo. Comprueba primero los datos locales y exporta selecciones si las hubiese.
 
-## Contenido
+**Aviso:** si luego de este paquete se hicieron modificaciones más recientes a `index.html` directamente en GitHub, NO debes sobrescribir ese HTML: en ese caso modifica solo sus enlaces del icono y el registro del Service Worker, y sube la carpeta `assets`, `manifest.webmanifest` y `sw.js`.
 
-- `index.html`: **último HTML del usuario**, conserva las pestañas Home, Design, Build stages, Finishes y My selections, Three.js, herramientas de diseño, etc.
-- `assets/mtd-king-fisher-icon-original.png`: imagen original final proporcionada por el usuario (sin cambio de diseño).
-- `assets/apple-touch-icon.png` (180×180): icono final para iPhone.
-- `assets/icon-192.png`, `assets/icon-512.png`, `assets/icon-1024.png`: iconos para Android/PWA y alta resolución.
-- `assets/favicon-32.png`, `assets/favicon-48.png`, `assets/favicon.ico`: iconos del navegador.
-- `manifest.webmanifest`: configuración de la aplicación instalable.
-- `sw.js`: cache de archivos locales; no convierte en offline las librerías de CDNs externos.
-- `assets/mtd-logo.png`, `assets/king-fisher-reference.png`: identidad y referencia guardadas de la versión anterior, no sustituyen el icono final.
 
-## Advertencias
+## New: Render this view (October 28, 2026)
 
-- El HTML carga **Three.js, OrbitControls, jsPDF y Google Fonts de internet**; puede no funcionar sin red en la primera visita.
-- Los diseños guardados funcionan mediante almacenamiento local del navegador; **no hay sincronización centralizada entre teléfonos**.
-- Para actualizar la app, reemplaza `index.html` y haz un commit. Si se ve la versión antigua, recarga y/o borra caché del sitio.
-- GitHub Pages es público en un sitio publicado típico; **no subas contratos privados, credenciales ni datos sensibles** al mismo repositorio.
-- Los datos y modelos arquitectónicos de la aplicación deben contrastarse con los planos oficiales antes de usarse para takeoffs o construcción.
+In the 3D Design / Build stages views, tap **Render this view** to capture the actual current camera view, with selected finish colors. From the preview you can **Download PNG**, **Share / Save to Photos** using the iPhone share menu, and **Save in My Renders**. The gallery is stored locally in the device's browser storage (IndexedDB), not on GitHub; it can be erased if the browser or home-screen app's data is cleared.
+
+**Prepare AI render** copies a prompt and opens your system share sheet so you can send the image to ChatGPT or another image-editing tool. This action DOES NOT automatically invoke an AI model. A true one-tap photorealistic transformation requires a secure external backend with an authorized paid image-generation API and optional cloud storage. Never put an API key or GitHub personal access token in a public `index.html`.
+
+Upload all unzipped files to your existing GitHub Pages repo, preserving `assets/`. The original 3D model is preserved. The previous Claude-only 4K download button remains unchanged; the new button works directly on GitHub Pages without Claude services.
