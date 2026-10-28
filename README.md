@@ -1,28 +1,19 @@
-# King Fisher Residence – MTD | Icono definitivo para iPhone
+# King Fisher Residence — ChatGPT sharing fix
 
-## Corrección de icono (27 oct 2026, v3)
+This package preserves the existing interactive Design Studio, camera, materials, floor plan, gallery, render capture and icons. Only the ChatGPT handoff controls and service-worker cache version were changed.
 
-La app ahora usa **el icono exacto del atardecer** proporcionado por el usuario.
-No se modificaron los contenidos ni la geometría 3D del diseño: únicamente las referencias de iconos y la versión del Service Worker.
+## Upload to GitHub
 
-- iPhone: `assets/kingfisher-atardecer-apple-v3.png` (180 x 180)
-- Manifest: `assets/kingfisher-atardecer-192-v3.png` y `assets/kingfisher-atardecer-512-v3.png`
-- Se conservaron también los nombres anteriores de iconos con la nueva imagen, para compatibilidad.
+1. Keep a copy of your currently published `index.html` in case you made additional changes later.
+2. Extract this ZIP and upload the **contents** to the repository root, preserving the `assets/` folder. Replace existing files.
+3. Confirm GitHub Pages deployment in Actions.
+4. Close and reopen the Home Screen web app. If cached, open the site in Safari and reload.
 
-## Instalar / actualizar
+## ChatGPT on iPhone
 
-1. Descomprime el ZIP. Sube **todos los archivos y la carpeta `assets`**, no el ZIP, a la raíz del repositorio `19984-Kingfisher-Lane-App`. Sustituye los archivos existentes cuando GitHub lo indique.
-2. En GitHub Actions, comprueba que `pages build and deployment` termine con éxito.
-3. En Safari del iPhone, abre `https://salcedocristhian.github.io/19984-Kingfisher-Lane-App/?icon=atardecer-v3`, y usa **Compartir → Añadir a pantalla de inicio**.
-4. Si hay un acceso anterior instalado con el icono viejo, retíralo de la pantalla de inicio y crea el nuevo. Comprueba primero los datos locales y exporta selecciones si las hubiese.
+1. Tap `Render this view` to capture the selected camera, materials and finishes.
+2. Tap `1. Copy image for ChatGPT`, then `2. Open ChatGPT`.
+3. In ChatGPT, long press the prompt composer and select Paste (if supported). You can then ask for a photorealistic architectural render while preserving the camera and materials.
+4. **Fallback:** use `Share / Save to Photos` and tap `Save Image`. In ChatGPT tap `+` > `Add photos & files` to attach it. Then tap `Copy AI instructions` in the Studio if desired.
 
-**Aviso:** si luego de este paquete se hicieron modificaciones más recientes a `index.html` directamente en GitHub, NO debes sobrescribir ese HTML: en ese caso modifica solo sus enlaces del icono y el registro del Service Worker, y sube la carpeta `assets`, `manifest.webmanifest` y `sw.js`.
-
-
-## New: Render this view (October 28, 2026)
-
-In the 3D Design / Build stages views, tap **Render this view** to capture the actual current camera view, with selected finish colors. From the preview you can **Download PNG**, **Share / Save to Photos** using the iPhone share menu, and **Save in My Renders**. The gallery is stored locally in the device's browser storage (IndexedDB), not on GitHub; it can be erased if the browser or home-screen app's data is cleared.
-
-**Prepare AI render** copies a prompt and opens your system share sheet so you can send the image to ChatGPT or another image-editing tool. This action DOES NOT automatically invoke an AI model. A true one-tap photorealistic transformation requires a secure external backend with an authorized paid image-generation API and optional cloud storage. Never put an API key or GitHub personal access token in a public `index.html`.
-
-Upload all unzipped files to your existing GitHub Pages repo, preserving `assets/`. The original 3D model is preserved. The previous Claude-only 4K download button remains unchanged; the new button works directly on GitHub Pages without Claude services.
+Important: iOS controls the native Share app list, and a static site cannot attach an image into ChatGPT automatically. This version does not add any AI API or server/database. Saved images remain local unless manually exported.

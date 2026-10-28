@@ -3043,7 +3043,7 @@ layout();setTimeout(layout,400);
 <script>
 // Installable home-screen experience. App functionality remains in the original HTML above.
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=20261028-render-view-1').catch(() => {}));
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=20261028-chatgpt-share-2').catch(() => {}));
 }
 </script>
 
@@ -3061,8 +3061,8 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
    <button type="button" id="kfRenderGallerySave">Save in My Renders</button>
    <button type="button" id="kfRenderAgain">Recapture current view</button>
   </div>
-  <div class="kf-r-ai"><strong>Photorealistic AI</strong><p>Prepare this exact camera view for a photorealistic enhancement in ChatGPT. Fully automatic AI rendering requires a separately connected, secure image-generation service.</p>
-    <div class="kf-r-actions"><button class="primary" type="button" id="kfRenderPrepareAI">Prepare AI render</button><button type="button" id="kfRenderPrompt">Copy AI prompt</button></div>
+  <div class="kf-r-ai"><strong>Photorealistic AI · ChatGPT</strong><p>iPhone's Share menu may not list ChatGPT. Use <b>1. Copy image</b>, then <b>2. Open ChatGPT</b> and paste the image into the chat. If iOS blocks image copying, use <b>Share / Save to Photos</b> above, then ChatGPT's + button to attach the photo. A secure image-generation service would be needed for automatic rendering inside this website.</p>
+    <div class="kf-r-actions"><button class="primary" type="button" id="kfRenderCopyImage">1. Copy image for ChatGPT</button><button type="button" id="kfRenderOpenChatGPT">2. Open ChatGPT</button><button type="button" id="kfRenderPrompt">Copy AI instructions</button></div>
   </div>
   <h3>My Renders <small style="font-weight:400;color:#677783">(stored only on this device)</small></h3>
   <div class="kf-r-gallery" id="kfRenderGallery"><span style="color:#71808e;font-size:12px">No saved views yet</span></div>
@@ -3089,10 +3089,25 @@ async function download(){if(!current)return alertState('Capture a view first');
 async function share(attachPrompt=false){if(!current)return alertState('Capture a view first');const file=new File([current.blob],name(),{type:'image/png'});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({files:[file],title:'King Fisher Residence — current view',text:attachPrompt?prompt():'Current King Fisher Residence 3D view'});alertState('Choose Save Image to save to Photos, or share with another app.');}else{download();alertState('Sharing is not supported here; saved as PNG instead.');}}catch(e){if(e.name!=='AbortError')alertState('Share unavailable; use Download PNG.');}}
 async function save(){if(!current)return alertState('Capture a view first');try{const id=Date.now()+'-'+Math.floor(Math.random()*100000);const data={id,blob:current.blob,info:current.info,created:new Date().toISOString()};await dbPut(data);alertState('Saved in My Renders on this device (not uploaded to GitHub).');await gallery();}catch(e){alertState('Browser storage is unavailable or full. Use Download PNG instead.');}}
 async function gallery(){const el=$('kfRenderGallery');try{saved=(await dbAll()).sort((a,b)=>b.created.localeCompare(a.created)).slice(0,16);el.replaceChildren();if(!saved.length){el.textContent='No saved views yet';return;}saved.forEach(row=>{const b=document.createElement('button');b.className='kf-r-thumb';b.type='button';const u=URL.createObjectURL(row.blob);const img=document.createElement('img');img.src=u;img.alt=row.info?.view||'Saved render';img.onload=()=>setTimeout(()=>URL.revokeObjectURL(u),40000);const label=document.createElement('span');label.textContent=(row.info?.view||'View')+' · '+new Date(row.created).toLocaleDateString();b.append(img,label);b.onclick=()=>{current={blob:row.blob,info:row.info};if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(row.blob);preview.src=previewURL;alertState('Saved view selected. Download, share or prepare an AI rendering.');};b.oncontextmenu=async e=>{e.preventDefault();if(confirm('Delete this saved view from this device?')){await dbDelete(row.id);gallery();}};el.appendChild(b);});}catch(e){el.textContent='Local gallery not available in this browser.';}}
-async function copyPrompt(){try{await navigator.clipboard.writeText(prompt());alertState('Prompt copied. Upload the PNG to ChatGPT with this prompt.');}catch(e){alertState('Copy not available. Share image to ChatGPT and ask to preserve the exact camera and colors.');}}
+async function copyPrompt(){try{await navigator.clipboard.writeText(prompt());alertState('AI instructions copied. Paste them into ChatGPT after attaching the image.');}catch(e){alertState('Copy unavailable. Ask ChatGPT for a photorealistic render preserving the exact viewpoint and finishes.');}}
+async function copyImage(){
+ if(!current)return alertState('Capture a view first');
+ try{
+  if(!navigator.clipboard?.write||typeof ClipboardItem==='undefined')throw new Error('Clipboard images unsupported');
+  await navigator.clipboard.write([new ClipboardItem({'image/png':current.blob})]);
+  alertState('Image copied! Tap “2. Open ChatGPT”, press and hold in its message composer and Paste. If image paste is unavailable, save the PNG to Photos and use + > Add photos & files.');
+ }catch(e){
+  alertState('This iPhone did not allow copying the PNG. Use “Share / Save to Photos” above, then open ChatGPT and attach it via + > Add photos & files.');
+ }
+}
+function openChatGPT(){
+ alertState('ChatGPT opens separately. Paste your copied image, or attach the saved PNG using + > Add photos & files. This website cannot send the image directly to ChatGPT.');
+ const w=window.open('https://chatgpt.com/','_blank','noopener,noreferrer');
+ if(!w){/* Pop-up may be handled by the browser externally. The user can use the visible URL if blocked. */}
+}
 $('kfRenderOpen').addEventListener('click',open);$('kfRenderClose').addEventListener('click',close);
 overlay.addEventListener('click',e=>{if(e.target===overlay)close();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close();});
-$('kfRenderAgain').addEventListener('click',capture);$('kfRenderDownload').addEventListener('click',download);$('kfRenderShare').addEventListener('click',()=>share(false));$('kfRenderGallerySave').addEventListener('click',save);$('kfRenderPrompt').addEventListener('click',copyPrompt);$('kfRenderPrepareAI').addEventListener('click',async()=>{await copyPrompt();await share(true);});
+$('kfRenderAgain').addEventListener('click',capture);$('kfRenderDownload').addEventListener('click',download);$('kfRenderShare').addEventListener('click',()=>share(false));$('kfRenderGallerySave').addEventListener('click',save);$('kfRenderPrompt').addEventListener('click',copyPrompt);$('kfRenderCopyImage').addEventListener('click',copyImage);$('kfRenderOpenChatGPT').addEventListener('click',openChatGPT);
 })();
 </script>
 </body>
