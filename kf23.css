@@ -66,3 +66,5 @@
 @media (orientation:landscape) and (max-height:550px) and (pointer:coarse) {
  body.m-on .kf23-ai{right:calc(12px + env(safe-area-inset-right,0px));top:calc(55px + env(safe-area-inset-top,0px))}
 }
+
+@media (max-width:1100px) and (pointer:coarse), (max-width:900px){body.m-on .kf22-tools{top:calc(var(--kf23-h,66px) + env(safe-area-inset-top,0px) + 72px)!important}}
