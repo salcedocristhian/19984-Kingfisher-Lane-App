@@ -1,19 +1,28 @@
-# King Fisher Residence — ChatGPT sharing fix
+# King Fisher Residence — MTD Studio 2.0 (GitHub Pages)
 
-This package preserves the existing interactive Design Studio, camera, materials, floor plan, gallery, render capture and icons. Only the ChatGPT handoff controls and service-worker cache version were changed.
+Ready to upload to **salcedocristhian/19984-Kingfisher-Lane-App**, branch `main`, repository root.
 
-## Upload to GitHub
+## Install / update
+1. Download and extract the ZIP.
+2. Back up the currently published `index.html`, `sw.js`, `manifest.webmanifest`, and `assets` first.
+3. In GitHub choose **Add file → Upload files** and upload the extracted **contents**, not the ZIP. Keep the `assets/` folder structure.
+4. Commit the changes. In **Actions**, confirm the newest `pages build and deployment` run succeeds.
+5. Open `https://salcedocristhian.github.io/19984-Kingfisher-Lane-App/` in Safari; close/reopen the Home Screen app to refresh.
 
-1. Keep a copy of your currently published `index.html` in case you made additional changes later.
-2. Extract this ZIP and upload the **contents** to the repository root, preserving the `assets/` folder. Replace existing files.
-3. Confirm GitHub Pages deployment in Actions.
-4. Close and reopen the Home Screen web app. If cached, open the site in Safari and reload.
+## Changes in Studio 2.0
+- iPhone navigation prioritizes **Design / Build / More**, de-emphasizes budget badge and hides advanced controls behind More tools.
+- Compact **sparkle icon** captures the current camera/materials as PNG. Sharing is **provider-neutral** through iOS Share Sheet, with Download PNG, Copy render brief and local Saved Views.
+- Design panel: **Undo / Redo** for direct user finish changes (in this session) and **Immersive Focus**; Escape / Exit focus returns to controls.
+- **My selections → Save design** now saves camera angle, view, construction stage and selections; restoring also restores camera when available. Older versions without camera still work. Local only unless an actual connected DB is available.
+- Local image gallery limit 15; explicit delete. Native CSV/PDF download fallback for GitHub Pages; PDF requires jsPDF to load.
+- Network-first same-origin service worker, updated cache version. iPhone/Android icon is the MTD sunset-house image.
 
-## ChatGPT on iPhone
-
-1. Tap `Render this view` to capture the selected camera, materials and finishes.
-2. Tap `1. Copy image for ChatGPT`, then `2. Open ChatGPT`.
-3. In ChatGPT, long press the prompt composer and select Paste (if supported). You can then ask for a photorealistic architectural render while preserving the camera and materials.
-4. **Fallback:** use `Share / Save to Photos` and tap `Save Image`. In ChatGPT tap `+` > `Add photos & files` to attach it. Then tap `Copy AI instructions` in the Studio if desired.
-
-Important: iOS controls the native Share app list, and a static site cannot attach an image into ChatGPT automatically. This version does not add any AI API or server/database. Saved images remain local unless manually exported.
+## Important limitations
+- This **does not create photorealistic AI renders automatically**. It prepares the PNG and prompt for a compatible AI service/app. No automatic ChatGPT opening or embedded API credentials.
+- **Sharing depends on the target app supporting iOS share extension**. You can save to Photos and attach manually.
+- **Saved Views and locally saved designs are not synced to a shared cloud repository**. They can be lost if browser site data is cleared.
+- Full Three.js/WebGL rendering and iPhone Home Screen behavior still need verification on an actual iPhone; static/mobile isolated tests do not replace device acceptance.
+- Do not use visual model quantities as construction takeoffs unless checked against signed plans.
+- External CDN resources may require internet, especially on first load.
+- Undo/Redo records direct selection and look/preset/assistant applications. It is not a historical editing system for all camera movement or construction settings.
+- Updating the zip **replaces the published HTML**. If you edited GitHub more recently, reconcile those changes before committing.

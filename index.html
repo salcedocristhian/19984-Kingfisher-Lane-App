@@ -406,6 +406,85 @@ body[data-view="disenar"] .kf-render-fab,body[data-view="obra"] .kf-render-fab{d
 .kf-r-dialog h3{font-size:14px;margin:15px 0 4px}
 @media(max-width:900px){.kf-render-fab{left:13px;right:auto;top:49%;bottom:auto;padding:12px 15px;font-size:13px;z-index:18}.kf-r-dialog{border-radius:17px;max-height:88vh;padding:14px}.kf-r-preview{max-height:37vh}.kf-r-actions button{font-size:12px}}
 </style>
+<style id="kfSeniorUXReview">
+/* Senior UX pass: quiet canvas, native-scale targets, progressively disclosed actions. */
+.kf-nav-short{display:none}.kf-nav-more,.kf-more-menu{display:none}
+.kf-more-menu[hidden]{display:none!important}
+.kf-more-menu{z-index:35;position:fixed;right:12px;top:calc(69px + env(safe-area-inset-top,0px));min-width:200px;padding:7px;border-radius:16px;background:var(--solid)}
+.kf-more-menu button{display:block;width:100%;text-align:left;padding:12px 14px;border:0;background:none;border-radius:10px;font-size:14px;font-weight:500;min-height:44px}
+.kf-more-menu button:focus-visible,.kf-more-menu button:hover{background:var(--paper)}
+.rail #kfRenderOpen{position:relative;inset:auto;transform:none;border:0;box-shadow:none;padding:0;width:40px;height:40px;display:grid;place-items:center;border-radius:11px;background:color-mix(in srgb,var(--navy) 10%,transparent);color:var(--navy);font:inherit}
+.rail #kfRenderOpen svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7}
+.rail .kf-tools-more{color:var(--soft)}
+.rail:not(.kf-tools-expanded) button:is([data-tool="walk"],[data-tool="tour"],[data-tool="labels"],[data-tool="measure"],[data-tool="note"],[data-tool="ai"]){display:none}
+.rail:not(.kf-tools-expanded) hr{display:none}
+.rail.kf-tools-expanded #kfToolsMore{background:color-mix(in srgb,var(--navy) 10%,transparent);color:var(--navy)}
+body:not([data-view="disenar"]):not([data-view="obra"]) .rail #kfRenderOpen{display:none}
+/* Neutral provider-independent capture sheet. */
+.kf-r-overlay{align-items:center;background:rgba(10,17,28,.52);padding:20px}
+.kf-r-dialog{background:var(--solid);color:var(--ink);width:min(520px,100%);padding:22px;border-radius:24px;box-shadow:0 26px 80px rgba(0,0,0,.24);font:14px/1.45 var(--sans);}
+.kf-r-eyebrow{font-size:10px;letter-spacing:.13em;color:var(--faint);font-weight:600}
+.kf-r-top h2{margin:2px 0 0;font-size:25px;font-weight:600;letter-spacing:-.04em}
+.kf-r-top button{font:400 27px/1 var(--sans);width:40px;height:40px;background:var(--paper);color:var(--soft)}
+.kf-r-desc{font-size:13px;color:var(--soft);margin:9px 0 15px;line-height:1.45}
+.kf-r-frame{position:relative;display:grid;place-items:center;background:var(--paper);border-radius:15px;overflow:hidden}
+.kf-r-preview{width:100%;max-width:100%;max-height:38svh;min-height:160px;display:block;object-fit:contain;border-radius:0;background:var(--paper)}
+.kf-r-capturelabel{position:absolute;top:11px;left:11px;background:rgba(17,26,35,.68);color:#fff;padding:5px 8px;font-size:10px;letter-spacing:.08em;font-weight:600;border-radius:7px;backdrop-filter:blur(8px);pointer-events:none}
+.kf-r-status{color:var(--soft);font-weight:400;font-size:12px;line-height:1.35;min-height:17px;margin:10px 0}
+.kf-r-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 8px}
+.kf-r-actions button{min-height:48px;padding:10px 12px;font:600 13px var(--sans);border-radius:12px;background:var(--paper);border:1px solid var(--hair2);color:var(--ink);display:flex;align-items:center;gap:8px;justify-content:center}
+.kf-r-actions button.primary{background:var(--navy);border-color:transparent;color:var(--navy-ink)}
+.kf-r-actions button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kf-r-actions button:disabled{opacity:.42;cursor:not-allowed}
+.kf-r-helper{font-size:12px;line-height:1.5;color:var(--soft);margin:8px 1px 14px}
+.kf-r-extra{border-top:1px solid var(--hair);padding:0}
+.kf-r-extra>summary{list-style:none;display:flex;gap:8px;align-items:center;min-height:48px;font-size:13.5px;font-weight:500;cursor:pointer}
+.kf-r-extra>summary::-webkit-details-marker{display:none}
+.kf-r-extra>summary>span{margin-left:auto;color:var(--faint)}
+.kf-r-extra[open]>summary>span{transform:rotate(180deg)}
+.kf-r-extra>summary small{font-size:11px;color:var(--soft);font-weight:400;margin-left:auto}
+.kf-r-secondary{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:2px 0 13px}
+.kf-r-secondary button{border:1px solid var(--hair2);background:var(--paper);color:var(--ink);min-height:44px;border-radius:11px;padding:10px;font-size:12.5px;font-weight:500}
+.kf-r-gallery{display:flex;gap:10px;overflow-x:auto;margin:0;padding:0 0 14px;min-height:34px;color:var(--soft);font-size:12px}
+.kf-r-thumb{position:relative;flex:0 0 116px;max-width:116px;border:1px solid var(--hair);border-radius:12px;padding:5px;background:var(--paper)}
+.kf-r-thumb-open{display:block;border:0;background:none;color:var(--ink);width:100%;text-align:left;padding:0}
+.kf-r-thumb-open img{width:100%;height:78px;object-fit:cover;border-radius:8px;display:block}
+.kf-r-thumb-open span{font-size:10px;line-height:1.3;display:block;color:var(--soft);margin:6px 0 1px}
+.kf-r-delete{position:absolute;right:7px;top:7px;border:0;background:rgba(16,25,32,.75);color:#fff;width:26px;height:26px;border-radius:50%;font-size:20px;line-height:1}
+.kf-render-open .rail,.kf-render-open .dock,.kf-render-open .top{pointer-events:none}
+@media(max-width:900px){
+ body.m-on .top{left:10px;right:10px;gap:8px}
+ body.m-on .mark{padding:5px 7px;border-radius:14px}
+ body.m-on .mark img{height:32px}
+ body.m-on .meter{display:none!important}
+ body.m-on .tabs{flex:1;min-width:0;max-width:calc(100vw - 88px);justify-content:space-between;gap:2px;overflow:visible;padding:4px}
+ body.m-on .tabs button{flex:1;white-space:nowrap;padding:8px 9px;font-size:13px}
+ body.m-on .tabs button[data-go="inicio"],body.m-on .tabs button[data-go="catalogo"],body.m-on .tabs button[data-go="seleccion"]{display:none}
+ body.m-on .kf-nav-long{display:none}body.m-on .kf-nav-short{display:inline}
+ body.m-on .tabs #kfNavMore{display:block;flex:1}
+ body.m-on .kf-more-menu:not([hidden]){display:block}
+ html body.m-on .rail hr{display:none}
+ html body.m-on .rail #kfRenderOpen{flex:none;width:42px;height:42px}
+ .kf-r-overlay{padding:0;align-items:flex-end}
+ .kf-r-dialog{border-radius:24px 24px 0 0;max-height:calc(94svh - env(safe-area-inset-top,0px));padding:21px 19px calc(20px + env(safe-area-inset-bottom,0px));width:100%;}
+ .kf-r-preview{max-height:38svh}
+}
+@media(prefers-reduced-motion:reduce){.kf-r-dialog,.kf-more-menu{transition:none!important}}
+
+/* KF Studio 2.0 — quiet editing controls and immersive presentation */
+.kf-design-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.kf-design-heading h2{margin:0}
+.kf-edit-actions{display:flex;align-items:center;gap:2px}
+.kf-edit-actions button{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:13px;color:var(--soft);background:transparent;transition:background .16s,color .16s}
+.kf-edit-actions button:where(:hover,:focus-visible){background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink)}
+.kf-edit-actions button:disabled{opacity:.28;cursor:not-allowed}
+.kf-edit-actions svg,.kf-exit-focus svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kf-exit-focus{position:fixed;z-index:46;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:9px;min-height:48px;border:1px solid var(--hair2);border-radius:999px;padding:10px 20px;font:600 13px var(--sans);color:var(--ink);white-space:nowrap;box-shadow:var(--shadow)}
+body.kf-focus .top,body.kf-focus .rail,body.kf-focus .dock,body.kf-focus .panel,body.kf-focus .hero,body.kf-focus .mini,body.kf-focus .scrim,body.kf-focus .sheet,body.kf-focus .tip,body.kf-focus .meter{display:none!important}
+body.kf-focus .stage{inset:0!important;}
+body.kf-focus .kf-exit-focus{display:flex!important}
+@media(prefers-reduced-motion:reduce){.kf-edit-actions button{transition:none}}
+</style>
 </head>
 <body data-view="inicio">
 <div class="stage" id="stage">
@@ -414,26 +493,30 @@ body[data-view="disenar"] .kf-render-fab,body[data-view="obra"] .kf-render-fab{d
   <script>window.addEventListener('error',function(e){var l=document.getElementById('loading');if(l){l.style.padding='24px';l.style.textAlign='center';l.textContent='The model could not load on this device. '+(e.message||'')+(e.lineno?' (line '+e.lineno+')':'');}});setTimeout(function(){var l=document.getElementById('loading');if(l&&!window.THREE){l.style.padding='24px';l.style.textAlign='center';l.textContent='The 3D library did not download. Check the connection or turn off content blockers, then reload.';}},15000);</script>
 </div>
 <div class="scrim"></div>
+<button id="kfExitFocus" class="kf-exit-focus glass" type="button" hidden aria-label="Exit immersive view"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8H3m0 0V3m0 5 6-6M16 8h5m0 0V3m0 5-6-6M8 16H3m0 0v5m0-5 6 6m7-6h5m0 0v5m0-5-6 6"/></svg> Exit focus</button>
 <header class="top">
   <div class="mark glass"><img src="data:image/webp;base64,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" alt="MTD Painting &amp; Construction"><div><b>King Fisher Residence</b><span>Loxahatchee, Florida</span></div></div>
   <nav class="tabs glass" aria-label="Sections">
     <button data-go="inicio" aria-current="page">Home</button>
     <button data-go="disenar">Design</button>
-    <button data-go="obra">Build stages</button>
+    <button data-go="obra"><span class="kf-nav-long">Build stages</span><span class="kf-nav-short">Build</span></button>
     <button data-go="catalogo">Finishes</button>
     <button data-go="seleccion">My selections</button>
+    <button type="button" id="kfNavMore" class="kf-nav-more" aria-label="More sections" aria-expanded="false" aria-controls="kfMoreMenu">More <span aria-hidden="true">⌄</span></button>
   </nav>
+  <div class="kf-more-menu glass" id="kfMoreMenu" hidden aria-label="More sections"><button data-go="inicio">Home</button><button data-go="catalogo">Finishes</button><button data-go="seleccion">My selections</button></div>
   <button class="meter" id="meter" title="Open My selections"><b>…</b><span>Checking allowances</span></button>
   <button class="act" id="shot" title="Save the current view at 3840 × 2160">Save 4K image</button>
 </header>
 <section class="hero" aria-label="Introduction">
   <h1>Design the King Fisher Residence before it’s built.</h1>
-  <p>Every room is modeled from the construction drawings. Choose floors, paint, kitchen and finishes, see them in 3D, and follow the cost as you go.</p>
+  <p>Explore the architectural model, test finishes room by room and review indicative costs. Verify dimensions and takeoffs against approved drawings before purchasing.</p>
   <div class="btns"><button class="btn primary" data-go="disenar">Start designing</button><button class="btn quiet" data-go="obra">See the build</button><button class="btn quiet" data-go="catalogo">Browse finishes</button></div>
   <p class="spec">A 3,855 sq ft single-story hacienda with four bedrooms and three baths, built by MTD Painting &amp; Construction.</p>
 </section>
 <nav class="dock glass" id="views" aria-label="Camera views"></nav>
 <nav class="rail glass" aria-label="Tools">
+  <button type="button" class="kf-render-fab" id="kfRenderOpen" data-label="Share with AI" title="Capture and share current view with AI" aria-label="AI render: capture and share this view"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 14.4 9.6 21.5 12l-7.1 2.4L12 21.5l-2.4-7.1L2.5 12l7.1-2.4L12 2.5Z"/><path d="m19 2 .75 2.25L22 5l-2.25.75L19 8l-.75-2.25L16 5l2.25-.75L19 2Z"/></svg></button>
   <button data-tool="walk" data-label="Walk through" aria-label="Walk through"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="M10 21l2-6 3 3v3M8 12l3-4 4 2 3 3M11 8l-1 5"/></svg></button>
   <button data-tool="tour" data-label="Guided tour" aria-label="Guided tour"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></button>
   <button data-tool="compare" data-label="Compare designs" aria-label="Compare designs"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 2v20"/></svg></button>
@@ -444,7 +527,8 @@ body[data-view="disenar"] .kf-render-fab,body[data-view="obra"] .kf-render-fab{d
   <hr>
   <button data-tool="measure" data-label="Measure" aria-label="Measure"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="8" width="20" height="8" rx="1.5"/><path d="M6 8v3M10 8v4M14 8v3M18 8v4"/></svg></button>
   <button data-tool="note" data-label="Add a note" aria-label="Add a note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.4-6-10a6 6 0 0 1 12 0c0 4.6-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></button>
-  <button data-tool="ai" data-label="Design assistant" aria-label="Design assistant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></button>
+  <button data-tool="ai" data-label="Finish ideas" aria-label="Finish ideas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></button>
+  <button type="button" id="kfToolsMore" class="kf-tools-more" data-label="More tools" aria-label="More tools" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button>
 </nav>
 <section class="float glass" id="envPanel" hidden aria-label="Light and weather">
   <h3>Light and weather<button class="x" id="envX" aria-label="Close">×</button></h3>
@@ -486,7 +570,12 @@ body[data-view="disenar"] .kf-render-fab,body[data-view="obra"] .kf-render-fab{d
 
 <aside class="panel glass" id="pDesign" aria-label="Design">
   <div class="ph-head">
-    <h2>Design</h2>
+    <div class="kf-design-heading"><h2>Design</h2>
+      <div class="kf-edit-actions" role="group" aria-label="Design editing tools">
+        <button id="kfUndo" type="button" title="Undo last finish change" aria-label="Undo" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-2"/></svg></button>
+        <button id="kfRedo" type="button" title="Redo finish change" aria-label="Redo" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 14 5-5-5-5m5 5H10a6 6 0 0 0 0 12h2"/></svg></button>
+        <button id="kfFocus" type="button" title="Focus on 3D model" aria-label="Immersive view"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4m13-5h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4m13-5v4a1 1 0 0 1-1 1h-4"/></svg></button>
+      </div></div>
     <p>Pick a room, then choose finishes from each list.</p>
     <div class="ctrls">
       <label class="f wide">Room<select id="space"></select></label>
@@ -544,7 +633,7 @@ body[data-view="disenar"] .kf-render-fab,body[data-view="obra"] .kf-render-fab{d
       <div class="side">
         <h3>Save this design</h3>
         <div class="row"><input type="text" id="name" placeholder="Name this combination" aria-label="Name this combination"><button class="btn primary" id="save">Save</button></div>
-        <small id="saveMsg">Saved designs are visible to the MTD team.</small>
+        <small id="saveMsg">Saved on this device. Export to share with the team.</small>
         <div class="saved" id="saved"></div>
         <button class="btn primary dlonly" id="pdf">Download selections PDF</button>
         <button class="btn quiet dlonly" id="csv">Download summary (CSV)</button>
@@ -2109,7 +2198,20 @@ if (typeof module !== 'undefined') module.exports = { buildObra };
   spaceSel.addEventListener('change', () => { space = spaceSel.value; const sp = SPACES.find(s => s[0] === space); go(sp[2]); renderDesign(); });
   $('#tierF').addEventListener('change', (e) => { tierF = e.target.value; renderDesign(); });
   $('#srcF').addEventListener('change', (e) => { srcF = e.target.value; renderDesign(); });
-  function choose(cat, id) { sel[cat] = id; const o = CATI[cat].opts.find(x => x.id === id); if (o && o.pal) Object.assign(sel, o.pal); if (phase < 11) setPhase(12); else apply(); }
+  // Design history is local to this session: only user-initiated finish changes.
+  const kfHistory = {undo: [], redo: []};
+  const kfState = () => ({sel:Object.assign({},sel), phase});
+  function kfHistoryUI(){ const u=$('#kfUndo'),r=$('#kfRedo'); if(u)u.disabled=!kfHistory.undo.length; if(r)r.disabled=!kfHistory.redo.length; }
+  function kfBeforeEdit(){ kfHistory.undo.push(kfState()); if(kfHistory.undo.length>35)kfHistory.undo.shift(); kfHistory.redo.length=0; kfHistoryUI(); }
+  function kfRestoreEdit(st){ if(!st)return; Object.keys(sel).forEach(k=>delete sel[k]);Object.assign(sel,st.sel); if(phase!==st.phase)setPhase(st.phase);else apply(); renderDesign(); kfHistoryUI(); }
+  function kfUndo(){if(!kfHistory.undo.length)return;kfHistory.redo.push(kfState());kfRestoreEdit(kfHistory.undo.pop());}
+  function kfRedo(){if(!kfHistory.redo.length)return;kfHistory.undo.push(kfState());kfRestoreEdit(kfHistory.redo.pop());}
+  $('#kfUndo').addEventListener('click',kfUndo);
+  $('#kfRedo').addEventListener('click',kfRedo);
+  $('#kfFocus').addEventListener('click',()=>{document.body.classList.add('kf-focus');$('#kfExitFocus').hidden=false;render();});
+  $('#kfExitFocus').addEventListener('click',()=>{document.body.classList.remove('kf-focus');$('#kfExitFocus').hidden=true;render();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('kf-focus')){$('#kfExitFocus').click();}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'')){e.preventDefault();e.shiftKey?kfRedo():kfUndo();}});
+  function choose(cat, id) { if(sel[cat]===id)return; kfBeforeEdit(); sel[cat] = id; const o = CATI[cat].opts.find(x => x.id === id); if (o && o.pal) Object.assign(sel, o.pal); if (phase < 11) setPhase(12); else apply(); }
   function catsOfSpace() { const sp = SPACES.find(s => s[0] === space); return sp[3] ? sp[3].map(id => CATI[id]) : CATS; }
   const openCats = new Set(['paleta', 'piso', 'gabinetes']);
   function renderDesign() {
@@ -2145,7 +2247,7 @@ if (typeof module !== 'undefined') module.exports = { buildObra };
     CATS.forEach(c => { const e = document.getElementById('cv-' + c.id); if (e) { const o = c.opts.find(x => x.id === sel[c.id]); e.textContent = c.id === 'paleta' ? (palMatch() ? o.n : 'Custom') : o ? o.n : ''; } });
     if (current === 'seleccion') renderSummary();
   }
-  document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => { Object.assign(sel, PRESETS[b.dataset.preset]); if (phase < 11) setPhase(12); else apply(); }));
+  document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => { kfBeforeEdit(); Object.assign(sel, PRESETS[b.dataset.preset]); if (phase < 11) setPhase(12); else apply(); }));
   // catálogo
   const catF = $('#catF'); CATS.forEach(c => { const o = document.createElement('option'); o.value = c.id; o.textContent = c.name; catF.appendChild(o); });
   ['#catF', '#catTier', '#catSrc'].forEach(q => $(q).addEventListener('change', renderCatalog)); $('#catQ').addEventListener('input', renderCatalog);
@@ -2184,12 +2286,15 @@ if (typeof module !== 'undefined') module.exports = { buildObra };
   document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => show(b.dataset.go)));
   // guardar
   const msg = $('#saveMsg'), savedEl = $('#saved'), nameEl = $('#name'); let db = null, dl = null;
+  // GitHub Pages native download fallback: the original export buttons relied on Claude's download extension.
+  dl = { save: async ({filename,data}) => {const blob=data instanceof Blob?data:new Blob([data],{type:filename.endsWith('.csv')?'text/csv;charset=utf-8':'application/octet-stream'}); const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}};
+  document.body.classList.add('can-dl');
   function renderSaved(rows) { savedEl.innerHTML = ''; rows.forEach(r => { const b = document.createElement('button'); const d = new Date(r.creado || 0); b.innerHTML = '<b></b><span></span>'; b.querySelector('b').textContent = r.nombre || 'Untitled'; b.querySelector('span').textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    b.addEventListener('click', () => { if (r.sel) { Object.assign(sel, r.sel); apply(); } }); savedEl.appendChild(b); }); }
+    b.addEventListener('click', () => { if (r.sel) { kfBeforeEdit(); Object.assign(sel, r.sel); if(r.phase) setPhase(r.phase); else apply(); if(r.view) go(r.view); if(r.camera?.position&&r.camera?.target) {cam.position.fromArray(r.camera.position); controls.target.fromArray(r.camera.target); if(r.camera.fov){cam.fov=r.camera.fov;cam.updateProjectionMatrix();}controls.update();render();} renderDesign(); msg.textContent='Design version restored on this device.'; } }); savedEl.appendChild(b); }); }
   const localSaved = () => { try { return JSON.parse(localStorage.getItem('kf_site_saved_v1') || '[]'); } catch (e) { return []; } };
   const keepLocal = (row) => { const l = localSaved(); l.unshift(row); try { localStorage.setItem('kf_site_saved_v1', JSON.stringify(l.slice(0, 20))); } catch (e) {} renderSaved(l); };
   renderSaved(localSaved());
-  $('#save').addEventListener('click', async () => { const row = { nombre: nameEl.value.trim() || 'Combination ' + new Date().toLocaleString('en-US'), sel: Object.assign({}, sel), creado: Date.now() };
+  $('#save').addEventListener('click', async () => { const row = { nombre: nameEl.value.trim() || 'Design version · '+new Date().toLocaleString('en-US'), sel: Object.assign({}, sel), view:viewId, phase, camera:{position:cam.position.toArray(),target:controls.target.toArray(),fov:cam.fov}, creado: Date.now() };
     if (db) { try { await db.collection('combinations_site').add(row); msg.textContent = 'Saved. The MTD team can see it.'; nameEl.value = ''; } catch (e) { msg.textContent = 'Couldn’t save online, so it was saved in this browser.'; keepLocal(row); } }
     else { keepLocal(row); msg.textContent = 'Saved in this browser.'; nameEl.value = ''; } });
   $('#csv').addEventListener('click', async () => { if (!dl) return; try { await dl.save({ filename: 'King_Fisher_finish_selections.csv', data: '\ufeff' + summaryCSV() }); } catch (e) { if (e && e.code === 'declined') return; msg.textContent = 'The file couldn’t be downloaded. Try again.'; } });
@@ -2736,7 +2841,7 @@ if (typeof module !== 'undefined') module.exports = { buildObra };
   envEl.querySelector('#envX').onclick = () => { envEl.hidden = true; setTool(TOOL, true); };
   // ---------- looks ----------
   const looksEl = document.getElementById('looks');
-  Object.entries(LOOKS).forEach(([k, [n, set]]) => { const b = document.createElement('button'); b.textContent = n; b.onclick = () => { Object.assign(sel, set); if (phase < 11) setPhase(12); else apply(); flash(`Applied the ${n.toLowerCase()} look.`); }; looksEl.appendChild(b); });
+  Object.entries(LOOKS).forEach(([k, [n, set]]) => { const b = document.createElement('button'); b.textContent = n; b.onclick = () => { kfBeforeEdit(); Object.assign(sel, set); if (phase < 11) setPhase(12); else apply(); flash(`Applied the ${n.toLowerCase()} look.`); }; looksEl.appendChild(b); });
   // ---------- medidor de presupuesto ----------
   const meter = document.getElementById('meter');
   function budget() { const rows = CATS.filter(c => c.id !== 'paleta' && c.g !== 'furn').map(lineOf).filter(Boolean); let lo = 0, hi = 0; rows.forEach(r => { lo += r.lo; hi += r.hi; });
@@ -2812,7 +2917,7 @@ if (typeof module !== 'undefined') module.exports = { buildObra };
       else { aiPlan = pick; aiOut.innerHTML = ''; const p = document.createElement('p'); p.textContent = res.summary || ''; aiOut.appendChild(p); const ul = document.createElement('ul'); Object.entries(pick).slice(0, 14).forEach(([k, v]) => { const li = document.createElement('li'); li.textContent = `${CATI[k].name}: ${CATI[k].opts.find(o => o.id === v).n}`; ul.appendChild(li); }); aiOut.appendChild(ul); document.getElementById('aiApply').hidden = false; }
     } catch (e) { aiOut.textContent = e && e.code === 'not_granted' ? 'The assistant needs permission to ask Claude. Allow it and try again.' : e && e.code === 'rate_limited' ? 'Too many requests right now. Wait a moment and try again.' : 'The assistant couldn’t answer. Try again.'; }
     btn.disabled = false; };
-  document.getElementById('aiApply').onclick = () => { if (!aiPlan) return; Object.assign(sel, aiPlan); if (phase < 11) setPhase(12); else apply(); flash('Applied the assistant’s selections. Undo by choosing a package or a saved design.'); };
+  document.getElementById('aiApply').onclick = () => { if (!aiPlan) return; kfBeforeEdit(); Object.assign(sel, aiPlan); if (phase < 11) setPhase(12); else apply(); flash('Applied the assistant’s selections. Use Undo to reverse this change.'); };
   document.getElementById('aiX').onclick = () => { aiEl.hidden = true; setTool(TOOL, true); };
   // ---------- seguimiento de obra (fechas, avance, inspecciones, fotos) ----------
   const INSP = { 2: ['Footing and setback inspection'], 4: ['Slab, vapor barrier and termite treatment'], 5: ['Lintel and tie beam inspection'], 6: ['Truss and sheathing nailing'], 7: ['Roof in-progress', 'Roof final'], 8: ['Framing', 'Rough plumbing', 'Rough electrical', 'Rough mechanical'], 9: ['Insulation', 'Drywall screw'], 11: ['Final plumbing', 'Final electrical'], 12: ['Final building inspection', 'Certificate of occupancy'] };
@@ -3043,71 +3148,64 @@ layout();setTimeout(layout,400);
 <script>
 // Installable home-screen experience. App functionality remains in the original HTML above.
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=20261028-chatgpt-share-2').catch(() => {}));
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=20261028-studio-v2').catch(() => {}));
 }
 </script>
 
 <!-- MTD Render View: view capture and on-device gallery (no API credentials in public GitHub Pages). -->
-<button type="button" class="kf-render-fab" id="kfRenderOpen" aria-label="Render current view"><svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>Render this view</button>
-<section class="kf-r-overlay" id="kfRenderOverlay" hidden aria-label="Render this view">
- <div class="kf-r-dialog" role="dialog" aria-modal="true" aria-labelledby="kfRenderTitle">
-  <div class="kf-r-top"><h2 id="kfRenderTitle">Render this view</h2><button id="kfRenderClose" aria-label="Close render dialog" type="button">×</button></div>
-  <p class="kf-r-desc">The camera, furniture, lighting and finish colors are captured directly from your current 3D view.</p>
-  <img id="kfRenderPreview" class="kf-r-preview" alt="Capture of the current King Fisher Residence 3D view">
-  <div class="kf-r-status" id="kfRenderStatus" role="status">Preparing current view…</div>
-  <div class="kf-r-actions">
-   <button type="button" class="primary" id="kfRenderShare">Share / Save to Photos</button>
-   <button type="button" id="kfRenderDownload">Download PNG</button>
-   <button type="button" id="kfRenderGallerySave">Save in My Renders</button>
-   <button type="button" id="kfRenderAgain">Recapture current view</button>
-  </div>
-  <div class="kf-r-ai"><strong>Photorealistic AI · ChatGPT</strong><p>iPhone's Share menu may not list ChatGPT. Use <b>1. Copy image</b>, then <b>2. Open ChatGPT</b> and paste the image into the chat. If iOS blocks image copying, use <b>Share / Save to Photos</b> above, then ChatGPT's + button to attach the photo. A secure image-generation service would be needed for automatic rendering inside this website.</p>
-    <div class="kf-r-actions"><button class="primary" type="button" id="kfRenderCopyImage">1. Copy image for ChatGPT</button><button type="button" id="kfRenderOpenChatGPT">2. Open ChatGPT</button><button type="button" id="kfRenderPrompt">Copy AI instructions</button></div>
-  </div>
-  <h3>My Renders <small style="font-weight:400;color:#677783">(stored only on this device)</small></h3>
-  <div class="kf-r-gallery" id="kfRenderGallery"><span style="color:#71808e;font-size:12px">No saved views yet</span></div>
+<section class="kf-r-overlay" id="kfRenderOverlay" hidden aria-label="Prepare view for AI rendering">
+ <div class="kf-r-dialog" role="dialog" aria-modal="true" aria-labelledby="kfRenderTitle" tabindex="-1">
+  <div class="kf-r-top"><div><span class="kf-r-eyebrow">KING FISHER · DESIGN STUDIO</span><h2 id="kfRenderTitle">AI render</h2></div><button id="kfRenderClose" aria-label="Close" type="button">×</button></div>
+  <p class="kf-r-desc">Your exact 3D camera view and selected finishes, ready for your favorite AI.</p>
+  <div class="kf-r-frame"><img id="kfRenderPreview" class="kf-r-preview" alt="Captured view of the King Fisher Residence model"><span class="kf-r-capturelabel" id="kfRenderViewLabel">CURRENT VIEW</span></div>
+  <p class="kf-r-status" id="kfRenderStatus" role="status" aria-live="polite">Preparing image…</p>
+  <div class="kf-r-actions"><button type="button" class="primary" id="kfRenderShare" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m0 0 5 5m-5-5L7 8M5 14v6h14v-6"/></svg>Share with AI</button><button type="button" id="kfRenderDownload" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 17v4h16v-4"/></svg>Download PNG</button></div>
+  <div class="kf-r-helper">Choose any AI app from the iPhone share menu. If it is not listed, download the PNG and attach it yourself. Copy the render brief separately if needed.</div>
+  <details class="kf-r-extra"><summary>More options <span aria-hidden="true">⌄</span></summary><div class="kf-r-secondary"><button id="kfRenderPrompt" type="button">Copy render brief</button><button id="kfRenderCopyImage" type="button">Copy image</button><button id="kfRenderGallerySave" type="button">Save to views</button><button id="kfRenderAgain" type="button">Recapture</button></div></details>
+  <details class="kf-r-extra kf-r-saved"><summary>Saved views <small>Only on this device</small><span aria-hidden="true">⌄</span></summary><div class="kf-r-gallery" id="kfRenderGallery">No saved views yet.</div></details>
  </div>
 </section>
 <script id="kfRenderFeature">
-(() => {
+(()=>{
 'use strict';
-const $ = id => document.getElementById(id);
-const overlay=$('kfRenderOverlay'),status=$('kfRenderStatus'),preview=$('kfRenderPreview');
-let current=null, previewURL='', saved=[];
+const $=id=>document.getElementById(id);
+const overlay=$('kfRenderOverlay'),dialog=overlay.querySelector('.kf-r-dialog'),status=$('kfRenderStatus'),preview=$('kfRenderPreview');
+const shareBtn=$('kfRenderShare'),downloadBtn=$('kfRenderDownload');
+let current=null,previewURL='',previousFocus=null,busy=false,sequence=0;
 const DB_NAME='KingFisherRenderGalleryV1';
-function dbOpen(){return new Promise((resolve,reject)=>{if(!indexedDB)return reject(new Error('Local gallery unavailable'));const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{req.result.createObjectStore('renders',{keyPath:'id'});};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
-async function dbAll(){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readonly');const q=tx.objectStore('renders').getAll();q.onsuccess=()=>{db.close();resolve(q.result||[]);};q.onerror=()=>{db.close();reject(q.error);};});}
-async function dbPut(data){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readwrite');tx.objectStore('renders').put(data);tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};});}
-async function dbDelete(id){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readwrite');tx.objectStore('renders').delete(id);tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};});}
-function name(){const d=new Date();return 'King_Fisher_'+(current?.info?.view||'View')+'_'+d.toISOString().replace(/[.:]/g,'-').slice(0,19)+'.png';}
-function prompt(){const info=current?.info||{};return `Transform the attached 3D architectural viewport of King Fisher Residence at 19984 King Fisher Ln, Loxahatchee, into a high-end photorealistic architectural rendering. Preserve the exact camera viewpoint, perspective, framing, floor plan, wall/door/window positions, cabinetry, countertops, furniture placement, proportions, ceiling geometry and selected finish colors. Upgrade realistic textures, wood grain, lighting, shadows, reflections and photographic realism only. Do not add, remove or relocate architectural elements or furniture. This is the selected ${info.view||'room'} view in construction stage ${info.phase||'current'}. Camera and materials should remain faithful to the reference image. Do not add captions, logos or watermarks.`;}
-function alertState(text){status.textContent=text;}
-function open(){overlay.hidden=false;document.body.style.overflow='hidden';capture();gallery().catch(()=>{});}
-function close(){overlay.hidden=true;document.body.style.overflow='';}
-async function capture(){alertState('Capturing this exact camera angle…');try{if(typeof window.KF_CAPTURE_VIEW!=='function')throw new Error('3D model is still loading');const next=await window.KF_CAPTURE_VIEW();current=next;if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(next.blob);preview.src=previewURL;alertState(`${next.width} × ${next.height} PNG · ${next.info.view} · ready`);}catch(e){alertState('Could not capture this view: '+(e.message||e));}}
-async function download(){if(!current)return alertState('Capture a view first');const url=URL.createObjectURL(current.blob);const link=document.createElement('a');link.href=url;link.download=name();document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),45000);alertState('PNG prepared for download. On iPhone check Files / Downloads.');}
-async function share(attachPrompt=false){if(!current)return alertState('Capture a view first');const file=new File([current.blob],name(),{type:'image/png'});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({files:[file],title:'King Fisher Residence — current view',text:attachPrompt?prompt():'Current King Fisher Residence 3D view'});alertState('Choose Save Image to save to Photos, or share with another app.');}else{download();alertState('Sharing is not supported here; saved as PNG instead.');}}catch(e){if(e.name!=='AbortError')alertState('Share unavailable; use Download PNG.');}}
-async function save(){if(!current)return alertState('Capture a view first');try{const id=Date.now()+'-'+Math.floor(Math.random()*100000);const data={id,blob:current.blob,info:current.info,created:new Date().toISOString()};await dbPut(data);alertState('Saved in My Renders on this device (not uploaded to GitHub).');await gallery();}catch(e){alertState('Browser storage is unavailable or full. Use Download PNG instead.');}}
-async function gallery(){const el=$('kfRenderGallery');try{saved=(await dbAll()).sort((a,b)=>b.created.localeCompare(a.created)).slice(0,16);el.replaceChildren();if(!saved.length){el.textContent='No saved views yet';return;}saved.forEach(row=>{const b=document.createElement('button');b.className='kf-r-thumb';b.type='button';const u=URL.createObjectURL(row.blob);const img=document.createElement('img');img.src=u;img.alt=row.info?.view||'Saved render';img.onload=()=>setTimeout(()=>URL.revokeObjectURL(u),40000);const label=document.createElement('span');label.textContent=(row.info?.view||'View')+' · '+new Date(row.created).toLocaleDateString();b.append(img,label);b.onclick=()=>{current={blob:row.blob,info:row.info};if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(row.blob);preview.src=previewURL;alertState('Saved view selected. Download, share or prepare an AI rendering.');};b.oncontextmenu=async e=>{e.preventDefault();if(confirm('Delete this saved view from this device?')){await dbDelete(row.id);gallery();}};el.appendChild(b);});}catch(e){el.textContent='Local gallery not available in this browser.';}}
-async function copyPrompt(){try{await navigator.clipboard.writeText(prompt());alertState('AI instructions copied. Paste them into ChatGPT after attaching the image.');}catch(e){alertState('Copy unavailable. Ask ChatGPT for a photorealistic render preserving the exact viewpoint and finishes.');}}
-async function copyImage(){
- if(!current)return alertState('Capture a view first');
- try{
-  if(!navigator.clipboard?.write||typeof ClipboardItem==='undefined')throw new Error('Clipboard images unsupported');
-  await navigator.clipboard.write([new ClipboardItem({'image/png':current.blob})]);
-  alertState('Image copied! Tap “2. Open ChatGPT”, press and hold in its message composer and Paste. If image paste is unavailable, save the PNG to Photos and use + > Add photos & files.');
- }catch(e){
-  alertState('This iPhone did not allow copying the PNG. Use “Share / Save to Photos” above, then open ChatGPT and attach it via + > Add photos & files.');
- }
-}
-function openChatGPT(){
- alertState('ChatGPT opens separately. Paste your copied image, or attach the saved PNG using + > Add photos & files. This website cannot send the image directly to ChatGPT.');
- const w=window.open('https://chatgpt.com/','_blank','noopener,noreferrer');
- if(!w){/* Pop-up may be handled by the browser externally. The user can use the visible URL if blocked. */}
-}
-$('kfRenderOpen').addEventListener('click',open);$('kfRenderClose').addEventListener('click',close);
-overlay.addEventListener('click',e=>{if(e.target===overlay)close();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close();});
-$('kfRenderAgain').addEventListener('click',capture);$('kfRenderDownload').addEventListener('click',download);$('kfRenderShare').addEventListener('click',()=>share(false));$('kfRenderGallerySave').addEventListener('click',save);$('kfRenderPrompt').addEventListener('click',copyPrompt);$('kfRenderCopyImage').addEventListener('click',copyImage);$('kfRenderOpenChatGPT').addEventListener('click',openChatGPT);
+function dbOpen(){return new Promise((resolve,reject)=>{if(!window.indexedDB)return reject(new Error('Offline storage unavailable'));const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('renders'))req.result.createObjectStore('renders',{keyPath:'id'});};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
+async function dbAll(){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readonly'),q=tx.objectStore('renders').getAll();q.onsuccess=()=>{db.close();resolve(q.result||[])};q.onerror=()=>{db.close();reject(q.error)};});}
+async function dbChange(kind,data){const db=await dbOpen();return new Promise((resolve,reject)=>{const tx=db.transaction('renders','readwrite');tx.objectStore('renders')[kind](data);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)};});}
+function name(){return `King_Fisher_${(current?.info?.view||'View').replace(/[^a-z0-9-_]/gi,'_')}_${new Date().toISOString().replace(/[.:]/g,'-').slice(0,19)}.png`;}
+function prompt(){const info=current?.info||{};return `Create a premium photorealistic architectural rendering from the attached King Fisher Residence 3D reference image. Keep the exact camera angle, crop, wall and window positions, room dimensions, furniture layout, roof/ceiling shapes, cabinetry, finishes, materials and colors as shown. Improve only physical lighting, surface texture, photorealism, shadows and reflections. Do not invent architectural elements, add furniture, change the design, or add text/watermarks. View: ${info.view||'current'}. Construction stage: ${info.phase??'unspecified'}. This is an architectural visualization request, not an instruction to redesign.`;}
+function notify(text){status.textContent=text;}
+function ready(value){shareBtn.disabled=!value;downloadBtn.disabled=!value;}
+function showBlob(blob){if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(blob);preview.src=previewURL;}
+function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.classList.add('kf-render-open');dialog.focus();capture();gallery();}
+function close(){sequence++;overlay.hidden=true;document.body.classList.remove('kf-render-open');if(previousFocus?.isConnected)previousFocus.focus();}
+async function capture(){if(busy)return;busy=true;ready(false);notify('Capturing current view…');const id=++sequence;
+ try{if(typeof window.KF_CAPTURE_VIEW!=='function')throw Error('The 3D model is not ready');const next=await window.KF_CAPTURE_VIEW();if(id!==sequence)return;current=next;showBlob(next.blob);$('kfRenderViewLabel').textContent=(next.info.view||'CURRENT VIEW').replace(/[-_]/g,' ').toUpperCase();ready(true);notify(`${next.width} × ${next.height} PNG · Ready to share`);}
+ catch(e){notify('Capture unavailable: '+(e.message||'Please try again'))}finally{busy=false;}}
+function download(){if(!current)return;const url=URL.createObjectURL(current.blob),a=document.createElement('a');a.href=url;a.download=name();document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);notify('PNG downloaded. On iPhone check Files / Downloads; use Share with AI for Save Image to Photos.');}
+async function share(){if(!current)return;const file=new File([current.blob],name(),{type:'image/png'});try{
+ if(!navigator.share||navigator.canShare&&!navigator.canShare({files:[file]})){notify('Sharing is unavailable. Save the image and attach it in any AI app.');return;}
+ await navigator.share({files:[file],title:'King Fisher Residence — AI-ready view',text:prompt()});notify('Image shared. Some apps may omit the render brief; use Copy render brief if needed.');
+ }catch(e){if(e.name!=='AbortError')notify('Could not share. Save the image and attach it manually.');}}
+async function copyPrompt(){try{await navigator.clipboard.writeText(prompt());notify('Render brief copied. Paste it with the image in your preferred AI.');}catch(e){notify('Copy unavailable in this browser.');}}
+async function copyImage(){if(!current)return;try{if(!navigator.clipboard?.write||!window.ClipboardItem)throw Error('Unsupported');await navigator.clipboard.write([new ClipboardItem({'image/png':current.blob})]);notify('Image copied. Open your preferred AI app and paste it.');}catch(e){notify('This browser cannot copy the image. Use Share with AI or Save image.');}}
+async function save(){if(!current)return;try{await dbChange('put',{id:Date.now()+'-'+Math.random().toString(36).slice(2,7),blob:current.blob,info:current.info,created:new Date().toISOString()});const items=(await dbAll()).sort((a,b)=>b.created.localeCompare(a.created));for(const old of items.slice(15))await dbChange('delete',old.id);notify('Saved locally on this device. Not uploaded to GitHub.');await gallery();}catch(e){notify('Local storage unavailable or full. Use Save image instead.');}}
+async function gallery(){const host=$('kfRenderGallery');try{const items=(await dbAll()).sort((a,b)=>b.created.localeCompare(a.created)).slice(0,15);host.replaceChildren();if(!items.length){host.textContent='No saved views yet.';return;}for(const item of items){const wrap=document.createElement('div');wrap.className='kf-r-thumb';const openBtn=document.createElement('button');openBtn.type='button';openBtn.className='kf-r-thumb-open';const img=document.createElement('img');const url=URL.createObjectURL(item.blob);img.src=url;img.alt=item.info?.view||'Saved view';img.addEventListener('load',()=>URL.revokeObjectURL(url),{once:true});const label=document.createElement('span');label.textContent=(item.info?.view||'View')+' · '+new Date(item.created).toLocaleDateString();openBtn.append(img,label);openBtn.onclick=()=>{current={blob:item.blob,info:item.info};showBlob(item.blob);$('kfRenderViewLabel').textContent=(item.info?.view||'Saved view').toUpperCase();ready(true);notify('Saved view selected.');};const del=document.createElement('button');del.type='button';del.className='kf-r-delete';del.textContent='×';del.setAttribute('aria-label','Delete saved view');del.onclick=async()=>{if(!confirm('Delete this saved view?'))return;await dbChange('delete',item.id);gallery();};wrap.append(openBtn,del);host.append(wrap);}}
+ catch(e){host.textContent='Local gallery unavailable.';}}
+$('kfRenderOpen').addEventListener('click',open);$('kfRenderClose').addEventListener('click',close);overlay.addEventListener('click',e=>{if(e.target===overlay)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
+$('kfRenderAgain').addEventListener('click',capture);downloadBtn.addEventListener('click',download);shareBtn.addEventListener('click',share);$('kfRenderGallerySave').addEventListener('click',save);$('kfRenderPrompt').addEventListener('click',copyPrompt);$('kfRenderCopyImage').addEventListener('click',copyImage);
+// Simplified mobile navigation and progressive disclosure of advanced tools.
+const navMore=$('kfNavMore'),moreMenu=$('kfMoreMenu'),toolsMore=$('kfToolsMore'),rail=document.querySelector('.rail');
+function hideMenu(){moreMenu.hidden=true;navMore.setAttribute('aria-expanded','false');}
+navMore.addEventListener('click',e=>{e.stopPropagation();const next=moreMenu.hidden;moreMenu.hidden=!next;navMore.setAttribute('aria-expanded',String(next));});
+moreMenu.addEventListener('click',e=>{if(e.target.closest('[data-go]'))hideMenu()});
+document.addEventListener('click',e=>{if(!moreMenu.hidden&&!e.target.closest('#kfNavMore,#kfMoreMenu'))hideMenu()});
+toolsMore.addEventListener('click',()=>{const yes=rail.classList.toggle('kf-tools-expanded');toolsMore.setAttribute('aria-expanded',String(yes));toolsMore.setAttribute('aria-label',yes?'Fewer tools':'More tools');});
+const reflectMenu=()=>navMore.setAttribute('aria-current',/^(inicio|catalogo|seleccion)$/.test(document.body.dataset.view)?'page':'false');new MutationObserver(reflectMenu).observe(document.body,{attributes:true,attributeFilter:['data-view']});reflectMenu();
 })();
 </script>
 </body>

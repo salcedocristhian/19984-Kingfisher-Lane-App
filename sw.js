@@ -1,5 +1,5 @@
 /* King Fisher Residence – network-first update; native iPhone app icon uses v3 path. */
-const CACHE = 'king-fisher-mtd-chatgpt-share-20261028-v2';
+const CACHE = 'king-fisher-mtd-studio-20261028-v2';
 const ASSETS = [
  './index.html', './manifest.webmanifest',
  './assets/kingfisher-atardecer-apple-v3.png',
