@@ -1,28 +1,26 @@
-# King Fisher Residence — MTD Studio 2.0 (GitHub Pages)
+# King Fisher Studio 2.1 — iPhone layout correction
 
-Ready to upload to **salcedocristhian/19984-Kingfisher-Lane-App**, branch `main`, repository root.
+Production candidate from the prior Studio 2.0 release. Uses the same 3D geometry, finishes, camera views, menus, logo and save/export functionality. Changes are restricted to the native-inspired phone layout and mobile controller.
 
-## Install / update
-1. Download and extract the ZIP.
-2. Back up the currently published `index.html`, `sw.js`, `manifest.webmanifest`, and `assets` first.
-3. In GitHub choose **Add file → Upload files** and upload the extracted **contents**, not the ZIP. Keep the `assets/` folder structure.
-4. Commit the changes. In **Actions**, confirm the newest `pages build and deployment` run succeeds.
-5. Open `https://salcedocristhian.github.io/19984-Kingfisher-Lane-App/` in Safari; close/reopen the Home Screen app to refresh.
+## What changed
+- Fixed top header with current room and small Undo, AI and More actions.
+- Four-button fixed bottom navigation: Explore / Design / Build / Saved.
+- Reduced overlapping floating toolbar; camera views and other advanced tools moved under More.
+- Material and build sheet moved above the bottom navigation with correct iPhone safe-area spacing.
+- WebGL viewport resized to avoid being covered by the sheet and tab bar.
+- Sharper solid control surfaces instead of excessively blurred panels.
+- Saved section opens existing selections and saved design combinations, preserving budget functionality.
+- Mobile AI icon shares a capture via neutral iOS share sheet, not a specific AI provider.
+- Updated service worker cache version.
 
-## Changes in Studio 2.0
-- iPhone navigation prioritizes **Design / Build / More**, de-emphasizes budget badge and hides advanced controls behind More tools.
-- Compact **sparkle icon** captures the current camera/materials as PNG. Sharing is **provider-neutral** through iOS Share Sheet, with Download PNG, Copy render brief and local Saved Views.
-- Design panel: **Undo / Redo** for direct user finish changes (in this session) and **Immersive Focus**; Escape / Exit focus returns to controls.
-- **My selections → Save design** now saves camera angle, view, construction stage and selections; restoring also restores camera when available. Older versions without camera still work. Local only unless an actual connected DB is available.
-- Local image gallery limit 15; explicit delete. Native CSV/PDF download fallback for GitHub Pages; PDF requires jsPDF to load.
-- Network-first same-origin service worker, updated cache version. iPhone/Android icon is the MTD sunset-house image.
+## Deploy to GitHub
+1. Back up the existing `index.html` and app data before modifying.
+2. Extract the ZIP. Upload the **contents** of the folder to the root of the `19984-Kingfisher-Lane-App` repository, replacing existing files.
+3. Confirm GitHub Actions Pages deployment succeeds.
+4. On iPhone, close the home-screen app completely and reopen with internet.
+5. Check camera orbit, bottom tabs, expandable Materials & Finishes, More > Camera views, and AI capture/share.
 
-## Important limitations
-- This **does not create photorealistic AI renders automatically**. It prepares the PNG and prompt for a compatible AI service/app. No automatic ChatGPT opening or embedded API credentials.
-- **Sharing depends on the target app supporting iOS share extension**. You can save to Photos and attach manually.
-- **Saved Views and locally saved designs are not synced to a shared cloud repository**. They can be lost if browser site data is cleared.
-- Full Three.js/WebGL rendering and iPhone Home Screen behavior still need verification on an actual iPhone; static/mobile isolated tests do not replace device acceptance.
-- Do not use visual model quantities as construction takeoffs unless checked against signed plans.
-- External CDN resources may require internet, especially on first load.
-- Undo/Redo records direct selection and look/preset/assistant applications. It is not a historical editing system for all camera movement or construction settings.
-- Updating the zip **replaces the published HTML**. If you edited GitHub more recently, reconcile those changes before committing.
+## Caveats
+- The desktop 3D/model code remains unchanged; no new photorealistic generation API.
+- Saved designs remain device-specific unless integrated with external storage.
+- Browser testing does not replace a final physical iPhone acceptance test.

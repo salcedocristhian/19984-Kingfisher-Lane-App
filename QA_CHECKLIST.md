@@ -1,22 +1,24 @@
-# Studio 2.0 — release QA checklist
+# Studio 2.1 — QA & acceptance checklist
 
-## Implemented / statically validated
-- [x] iPhone compact tabs / more menu markup and handlers.
-- [x] Compact AI action and provider-neutral share handler.
-- [x] Undo, redo, immersive mode, design version camera metadata added.
-- [x] Cache version updated to distinguish from previous installs.
-- [x] Original 3D model definition and geometry left untouched.
+## Static checks (completed)
+- [x] HTML contains original WebGL 3D model and material options.
+- [x] JavaScript parsing passed for all nine inline scripts.
+- [x] No duplicate element IDs.
+- [x] All four mobile tabs exist with correctly mapped destination views.
+- [x] iPhone-safe top header and bottom navigation are separate from desktop view.
+- [x] Service Worker cache version incremented to reduce stale deployments.
+- [x] Standalone mobile layout simulation: 390 × 844 screen, 72px header, 640px 3D viewport, 64px material sheet, 76px bottom tabs; no overlap.
+- [x] Standalone mobile layout simulation: secondary menu opens without clipping.
 
-## Verify on the actual iPhone before declaring a final production release
-- [ ] Model loads and orbit/zoom works in Design and Build.
-- [ ] AI sparkle captures current angle and does not modify selected colors.
-- [ ] Share sheet and Save to Photos / Files work in Safari and installed web app.
-- [ ] Undo/Redo reverses 3 consecutive finish choices and restores on Redo.
-- [ ] Immersive focus hides panels and Exit focus reliably restores navigation.
-- [ ] Save a named design under My selections, change materials/view, restore version.
-- [ ] Try a long session, rotate device, close/reopen, verify stable navigation.
-- [ ] CSV export; PDF export when online.
-- [ ] Newest GitHub Actions Pages deployment is green after uploading.
-- [ ] Confirm icon after Safari cache refresh.
+## Real-device acceptance (pending)
+- [ ] Open on iPhone Home Screen; verify model loads and orbit/touch/pinch work.
+- [ ] Navigate Explore / Design / Build / Saved; inspect each destination.
+- [ ] Tap Materials & finishes to expand and select a finish; confirm the 3D scene updates.
+- [ ] Tap Undo; ensure material selection reverts.
+- [ ] Tap AI sparkles; confirm current view capture and share sheet.
+- [ ] More → Camera views; verify all view shortcuts fit and are horizontally scrollable.
+- [ ] More → Immersive view; exit and restore controls.
+- [ ] Confirm save, export, and older saved versions still function.
+- [ ] Repeat in landscape; check accessibility with larger system text.
 
-**Note:** This is an enhanced GitHub Pages web app, not a native App Store/SwiftUI build.
+Note: Direct end-to-end testing in a full local browser was blocked in this environment, so the real 3D interaction is not certified. The interface-only layout was validated in a separate browser simulation without the 3D engine. The layout screenshots contain placeholders and are not 3D renderings.
