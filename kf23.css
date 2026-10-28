@@ -56,3 +56,13 @@
  body.m-on .kf23-stages:not([hidden]),body.m-on .kf22-rooms-menu:not([hidden]){left:auto!important;right:calc(12px + env(safe-area-inset-right,0px))!important;width:min(430px,49vw)!important;bottom:8px!important;max-height:calc(100svh - var(--kf23-h) - 16px)!important}
  body.m-on .kf23-shade{bottom:0!important}
 }
+/* One discreet AI capture icon. Hidden during active panels. */
+@media (max-width:1100px) and (pointer:coarse), (max-width:900px) {
+ body.m-on .kf23-ai{position:fixed;z-index:28;top:calc(var(--kf23-h,66px) + env(safe-area-inset-top,0px) + 16px);right:12px;width:44px;height:44px;border-radius:50%;border:1px solid #dce3eb;display:grid;place-items:center;background:#fff;color:#1b3e75;box-shadow:0 3px 13px #11224420;padding:0}
+ body.m-on .kf23-ai:active{transform:scale(.95)}
+ body.m-on.kf23-overlay .kf23-ai{visibility:hidden;pointer-events:none}
+ body.m-on #kfNativeAI{display:none!important}
+}
+@media (orientation:landscape) and (max-height:550px) and (pointer:coarse) {
+ body.m-on .kf23-ai{right:calc(12px + env(safe-area-inset-right,0px));top:calc(55px + env(safe-area-inset-top,0px))}
+}
