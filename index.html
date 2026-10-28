@@ -625,7 +625,7 @@ body.kf-focus .kf-exit-focus{display:flex!important}
  body.m-on:not(.kf-sheet-hidden) .kf22-card,body.m-on:not(.kf-sheet-hidden) .kf22-map,body.m-on:not(.kf-sheet-hidden) .kf22-fab{display:none!important}
 }
 </style>
-<link rel="stylesheet" href="./kf23.css?v=23-20261027">
+<link rel="stylesheet" href="./kf23.css?v=23.1-20261028">
 </head>
 <body data-view="inicio">
 <div class="stage" id="stage">
@@ -3508,7 +3508,7 @@ function sync() {
   // controles por pantalla
   cams.hidden = s !== 'home'; compass.hidden = !(s === 'home' || s === 'root'); pins.hidden = s !== 'root'; map.hidden = s !== 'room'; card.hidden = s !== 'build';
   if (s === 'home') fabSet([['ai', 'Share this view', () => $('kfRenderOpen') && $('kfRenderOpen').click(), 'ai'], ['walk', 'Walk through', () => K().startWalk()], ['play', 'Guided tour', () => K().startTour()], ['plan', 'Mini floor plan', tool('map')]]);
-  else if (s === 'room') fabSet([['walk', 'Walk through', () => K().startWalk()], ['play', 'Guided tour', () => K().startTour()], ['compare', 'Compare designs', tool('compare')], ['light', 'Light and weather', tool('light')]]);
+  else if (s === 'room') fabSet([['ai', 'Share this view with AI', () => $('kfRenderOpen')?.click(), 'ai'], ['walk', 'Walk through', () => K().startWalk()], ['play', 'Guided tour', () => K().startTour()], ['compare', 'Compare designs', tool('compare')], ['light', 'Light and weather', tool('light')]]);
   else if (s === 'build') fabSet([['list', 'All stages', () => setSheet(!sheetOpen)], ['play', 'Play the build', () => K().playBuild()], [K().noRoof ? 'eyeOn' : 'eye', K().noRoof ? 'Show the roof' : 'Hide the roof', () => { K().setNoRoof(!K().noRoof); sync(); }], ['layers', K().viewId === 'corte' ? '3D view' : 'Floor plan view', () => { K().go(K().viewId === 'corte' ? 'exterior' : 'corte'); sync(); }]]);
   else fabSet([]);
   if (s === 'build') { const i = stageInfo(); $('kf22CardT').textContent = `Stage ${i.k} of 12`; $('kf22CardD').textContent = i.d.split(/[.;]/)[0]; const p = Math.round(i.k / 12 * 100); $('kf22Bar').style.width = p + '%'; $('kf22Pct').textContent = p + '%'; $('kf22Prev').disabled = i.k <= 1; $('kf22Next').disabled = i.k >= 12; }
@@ -3561,6 +3561,6 @@ setSheet(false); setTimeout(sync, 0); setTimeout(sync, 600);
 window.__kf22 = { sync, setSheet };
 })();
 </script>
-<script src="./kf23.js?v=23-20261027"></script>
+<script src="./kf23.js?v=23.1-20261028"></script>
 </body>
 </html>
