@@ -23,6 +23,42 @@ document.getElementById('kfNativeTabs')?.addEventListener('click',close,true);
 $('kfNativeBack')?.addEventListener('click',close,true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 new MutationObserver(close).observe(B,{attributes:true,attributeFilter:['data-view']});
+// The original 3D object picker owns #pop. When it opens, make it an exclusive
+// modal sheet: hide camera tools, minimap, navigation and every competing panel.
+// Observe 'hidden' rather than intercepting individual mesh categories.
+const finishPop=$('pop');
+if(finishPop){
+  const popBackdrop=document.createElement('button');
+  popBackdrop.type='button';popBackdrop.id='kf23PopBackdrop';
+  popBackdrop.className='kf23-pop-backdrop';popBackdrop.hidden=true;
+  popBackdrop.setAttribute('aria-label','Close finish options');
+  B.appendChild(popBackdrop);
+  popBackdrop.addEventListener('click',()=>finishPop.querySelector('.pop-x')?.click());
+  let lastPopOpen=false;
+  function syncFinishPop(){
+    const visible=B.classList.contains('m-on')&&!finishPop.hidden;
+    if(visible===lastPopOpen)return;
+    lastPopOpen=visible;
+    if(visible){
+      // Close any other custom modal before showing the selected finish.
+      if(mode!=='none'){mode='none';sync();}
+      $('kfNativeMenu').hidden=true;
+      B.classList.add('kf23-pop-open');
+      finishPop.setAttribute('role','dialog');
+      finishPop.setAttribute('aria-modal','true');
+      popBackdrop.hidden=false;
+    }else{
+      B.classList.remove('kf23-pop-open');
+      finishPop.removeAttribute('aria-modal');
+      popBackdrop.hidden=true;
+    }
+  }
+  new MutationObserver(syncFinishPop).observe(finishPop,{attributes:true,attributeFilter:['hidden']});
+  new MutationObserver(syncFinishPop).observe(B,{attributes:true,attributeFilter:['class']});
+  window.addEventListener('pageshow',syncFinishPop);
+  window.addEventListener('resize',syncFinishPop,{passive:true});
+  syncFinishPop();
+}
 // AI entrypoint uses the existing Studio 2.2 floating toolbar; do not inject another button.
 sync();window.KFStudio23={open,close};
 })();
